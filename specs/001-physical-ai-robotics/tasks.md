@@ -199,11 +199,11 @@ description: "Task list for Physical AI & Humanoid Robotics Textbook implementat
 - [X] T073 Update `book/DEPLOY.md` with detailed deployment instructions
 - [X] T074 Integrate inline citations to official docs (URL + tested version) across `book/docs/` pages and `book/VERSIONS.md`
 - [X] T075 Implement human validation checklist for each chapter
-- [ ] T076 Document decisions needing documentation in an appendix
-- [ ] T077 Document tradeoff examples in an appendix
-- [ ] T078 Finalize Docusaurus configuration for search, theming, and deployment
-- [ ] T079 Ensure all examples include reproducibility matrix details in their `README.md`
-- [ ] T080 Set up CI/CD pipeline for Docusaurus build and deployment to GitHub Pages
+- [X] T076 Document decisions needing documentation in an appendix
+- [X] T077 Document tradeoff examples in an appendix
+- [X] T078 Finalize Docusaurus configuration for search, theming, and deployment
+- [X] T079 Ensure all examples include reproducibility matrix details in their `README.md`
+- [X] T080 Set up CI/CD pipeline for Docusaurus build and deployment to GitHub Pages
 
 ---
 

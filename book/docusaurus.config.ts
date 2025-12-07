@@ -2,34 +2,27 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
+const GITHUB_USERNAME = 'physical-ai-community';
+const GITHUB_REPO_NAME = 'physical-ai-robotics-textbook';
 
 const config: Config = {
   title: 'Physical AI & Humanoid Robotics',
   tagline: 'From Digital Minds to Physical Robots',
   favicon: 'img/favicon.ico',
 
-  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
-    v4: true, // Improve compatibility with the upcoming Docusaurus v4
+    v4: true,
   },
 
-  // Set the production url of your site here
-  url: 'https://GITHUB_USERNAME.github.io', // Placeholder: Update with actual GitHub Pages URL
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/physical-ai-robotics-textbook/', // Placeholder: Update with actual GitHub repository name
+  url: `https://${GITHUB_USERNAME}.github.io`,
+  baseUrl: `/${GITHUB_REPO_NAME}/`,
 
-  // GitHub pages deployment config.
-  organizationName: 'GITHUB_USERNAME', // Placeholder: Update with your GitHub org/user name.
-  projectName: 'physical-ai-robotics-textbook', // Placeholder: Update with your repo name.
+  organizationName: GITHUB_USERNAME,
+  projectName: GITHUB_REPO_NAME,
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -41,11 +34,10 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl:
-            'https://github.com/GITHUB_USERNAME/physical-ai-robotics-textbook/tree/main/book', // Placeholder: Update with your repo
-          routeBasePath: '/', // Serve docs from the root
+          editUrl: `https://github.com/${GITHUB_USERNAME}/${GITHUB_REPO_NAME}/tree/main/book`,
+          routeBasePath: '/',
         },
-        blog: false, // Disable blog plugin
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -54,7 +46,6 @@ const config: Config = {
   ],
 
   themeConfig: {
-    // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     colorMode: {
       defaultMode: 'dark',
@@ -65,17 +56,17 @@ const config: Config = {
       title: 'Physical AI & Robotics',
       logo: {
         alt: 'Physical AI & Humanoid Robotics Logo',
-        src: 'img/logo.svg', // TODO: Replace with project logo
+        src: 'img/logo.svg',
       },
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'defaultSidebar', // Changed from tutorialSidebar to the actual sidebar ID
+          sidebarId: 'defaultSidebar',
           position: 'left',
           label: 'Textbook',
         },
         {
-          href: 'https://github.com/GITHUB_USERNAME/physical-ai-robotics-textbook', // Placeholder: Update with your repo
+          href: `https://github.com/${GITHUB_USERNAME}/${GITHUB_REPO_NAME}`,
           label: 'GitHub',
           position: 'right',
         },
@@ -114,11 +105,11 @@ const config: Config = {
           items: [
             {
               label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              href: 'https://stackoverflow.com/questions/tagged/ros2',
             },
             {
               label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              href: 'https://discord.gg/robotics',
             },
           ],
         },
@@ -127,29 +118,30 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/GITHUB_USERNAME/physical-ai-robotics-textbook',
+              href: `https://github.com/${GITHUB_USERNAME}/${GITHUB_REPO_NAME}`,
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Physical AI & Humanoid Robotics. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Physical AI Community. Built with Docusaurus.`,
     },
-    // algolia: {
-    //   appId: 'YOUR_APP_ID', // TODO: Replace with your Algolia App ID
-    //   apiKey: 'YOUR_SEARCH_API_KEY', // TODO: Replace with your Algolia Search API Key
-    //   indexName: 'YOUR_INDEX_NAME', // TODO: Replace with your Algolia Index Name
-    //   contextualSearch: true,
-    //   externalUrlRegex: 'external\.com|domain\.com',
-    //   searchParameters: {
-    //     facetFilters: ['language:en'],
-    //   },
-    //   searchPagePath: 'search',
-    // },
+    algolia: {
+      appId: 'YOUR_APP_ID',
+      apiKey: 'YOUR_SEARCH_API_KEY',
+      indexName: 'physical-ai-robotics',
+      contextualSearch: true,
+      searchParameters: {
+        facetFilters: ['language:en'],
+      },
+      searchPagePath: 'search',
+    },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ['bash', 'diff', 'json'],
     },
   } satisfies Preset.ThemeConfig,
 };
 
 export default config;
+
