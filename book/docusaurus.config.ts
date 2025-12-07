@@ -2,8 +2,8 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-const GITHUB_USERNAME = 'physical-ai-community';
-const GITHUB_REPO_NAME = 'physical-ai-robotics-textbook';
+const GITHUB_USERNAME = 'ash-codiology';
+const GITHUB_REPO_NAME = 'AI-robotics-playground';
 
 const config: Config = {
   title: 'Physical AI & Humanoid Robotics Course',
