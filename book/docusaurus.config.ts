@@ -6,7 +6,7 @@ const GITHUB_USERNAME = 'physical-ai-community';
 const GITHUB_REPO_NAME = 'physical-ai-robotics-textbook';
 
 const config: Config = {
-  title: 'Physical AI & Humanoid Robotics',
+  title: 'Physical AI & Humanoid Robotics Course',
   tagline: 'From Digital Minds to Physical Robots',
   favicon: 'img/favicon.ico',
 
@@ -53,7 +53,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Physical AI & Robotics',
+      title: 'Physical AI & Humanoid Robotics Course',
       logo: {
         alt: 'Physical AI & Humanoid Robotics Logo',
         src: 'img/logo.svg',
