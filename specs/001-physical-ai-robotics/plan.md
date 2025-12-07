@@ -6,26 +6,19 @@
 **Note**: This template is filled in by the `/sp.plan` command. See `.specify/templates/commands/plan.md` for the execution workflow.
 
 ## Summary
-
-[Extract from feature spec: primary requirement + technical approach from research]
+This plan outlines the creation of a comprehensive textbook, "From Digital Minds to Physical Robots: A Practical Guide to Physical AI & Humanoid Robotics". It will feature a 4-module backbone, teaching students to build a reproducible humanoid robotics pipeline from code to simulation, perception, and task execution. The book will be delivered as a Docusaurus markdown site deployed via GitHub Pages, incorporating runnable examples and a CI/CD pipeline.
 
 ## Technical Context
 
-<!--
-  ACTION REQUIRED: Replace the content in this section with the technical details
-  for the project. The structure here is presented in advisory capacity to guide
-  the iteration process.
--->
-
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Language/Version**: Python 3.x (latest stable), JavaScript (for Docusaurus)
+**Primary Dependencies**: ROS2, Gazebo/Unity, NVIDIA Isaac Sim, Isaac ROS, Nav2, Whisper (ASR), various LLM clients (local or API), Docusaurus v3, Node.js, npm
+**Storage**: N/A (book content in markdown files, small assets in Git LFS if needed)
+**Testing**: `pytest`, `test_ros_nodes.sh`, `test_sim_stability.sh`, `test_vslam_nav2.py`, `test_vla_pipeline.sh`, Docusaurus build tests, GitHub Actions CI
+**Target Platform**: Ubuntu 22.04 LTS (primary development), Windows/macOS (for Docusaurus/Unity), Jetson Edge Kit (optional physical deployment)
+**Project Type**: Textbook with runnable code examples, Docusaurus site
+**Performance Goals**: Docusaurus site loads quickly, runnable examples execute efficiently, CI/CD pipeline deploys reliably, simulated robot performance (e.g., 60 FPS in Gazebo/Isaac).
+**Constraints**: Book content ~12,000–20,000 words total. Reproducible examples. Modular structure. GitHub Pages deployment.
+**Scale/Scope**: 4 core modules + Capstone project, comprehensive guide for target audience (Undergraduate/graduate students, early-career engineers, technical learners).
 
 ## Constitution Check
 
@@ -96,3 +89,91 @@ book/
 |-----------|------------|-------------------------------------|
 | [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
 | [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+
+## High-level architecture of the book (4-module backbone)
+
+**Pipeline**: Digital Brain ➜ Simulation ➜ Perception ➜ Autonomy
+**Technical path**: ROS2 (Control) ➜ Gazebo/Unity (Physics) ➜ NVIDIA Isaac (Perception + Navigation) ➜ VLA (Task)
+**Book output format**: Docusaurus markdown ➜ GitHub Pages deployment
+
+## Chapter structure under each module
+
+Each module will be broken into:
+1.  Concepts
+2.  Tooling
+3.  Implementation walkthrough
+4.  Case study / example
+5.  Mini project
+6.  Debugging & common failures
+
+## Core technical anchors
+
+-   **ROS2**: rclpy, Nodes, URDF, Actions
+-   **Gazebo/Unity**: URDF load, physics engine, sensor simulation
+-   **NVIDIA Isaac**: Omniverse USD, Isaac Sim, Isaac ROS, VSLAM, Nav2
+-   **VLA**: Whisper ➜ LLM task decomposition ➜ ROS action graph
+
+## Research approach
+
+**Research-concurrent writing**:
+-   Consult official docs at module boundaries
+-   Use simulation logs, SDK specs, hardware constraints
+-   Minimize theory ➜ maximize executable examples
+**Hardware-informed pedagogy**:
+-   GPU requirements (RTX, VRAM)
+-   Edge inference (Jetson Orin)
+-   Humanoid/Proxy robot capabilities
+
+## Quality validation
+
+-   Verify every code example executes on: Ubuntu 22.04 ➜ ROS2 Humble/Iron
+-   Simulation reproducibility:
+    -   Gazebo worlds load + sensors give data
+    -   Isaac pipelines tested with sample scenes
+    -   VLA outputs deterministic enough to plan tasks
+
+## Decisions needing documentation
+
+-   Simulation vs real robots tradeoffs
+-   RTX workstation vs Cloud Isaac Sim
+-   Humanoid body model complexity (URDF/SDF)
+-   Jetson deployment constraints
+-   Voice-based autonomy vs button commands
+-   Nav2 limitations for biped locomotion
+
+## Tradeoff examples
+
+-   Gazebo (fast setup) vs Isaac (GPU heavy + photorealistic)
+-   Jetson Orin Nano (cheap) vs Orin NX (stable + memory overhead)
+-   Quadruped proxy vs Humanoid build
+-   Local control loops vs cloud inference
+-   End-to-end VLA vs modular ROS pipelines
+
+## Testing strategy
+
+-   **Module 1**: Validate ROS nodes send commands and receive sensor messages
+-   **Module 2**: Validate physics simulation ➜ object + robot stable for 60s
+-   **Module 3**: Validate VSLAM map + Nav2 path to target waypoint
+-   **Module 4**: Validate speech ➜ plan + action execution
+
+## Validation checks
+
+-   Does the book enable a student to build a humanoid pipeline without guessing?
+-   Do instructions match actual commands and SDK versions?
+-   Are hardware requirements realistic and precise?
+-   Is every code example runnable from scratch?
+
+## Technical details
+
+Use research-concurrent approach (learn Isaac pipelines + write implementation side-by-side)
+Reference official robotics documentation (ROS2, Gazebo, Isaac, Whisper, Nav2)
+Use inline citations to original SDK docs
+Follow Constitution standards for accuracy and reproducibility
+
+## Organization by phases
+
+1.  **Research**: Survey official docs, SDK APIs, hardware constraints
+2.  **Foundation**: Teach concepts and prerequisites for each module
+3.  **Analysis**: Implement examples and architecture choices
+4.  **Synthesis**: Integrate simulation, navigation, and VLA autonomy into capstone
+
