@@ -1,5 +1,5 @@
 ---
-id: module-2-simulation
+id: index
 title: The Digital Twin (Gazebo & Unity)
 sidebar_position: 3
 ---

@@ -1,5 +1,5 @@
 ---
-id: module-3-isaac
+id: index
 title: The AI-Robot Brain (NVIDIA Isaac)
 sidebar_position: 4
 ---

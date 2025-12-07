@@ -1,5 +1,5 @@
 ---
-id: introduction
+id: index
 title: Introduction to Physical AI
 sidebar_position: 1
 ---

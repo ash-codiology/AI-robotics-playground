@@ -27,7 +27,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'doc',
-      id: 'capstone/index',
+      id: 'capstone/capstone',
       label: 'Capstone Project',
     }
   ],
