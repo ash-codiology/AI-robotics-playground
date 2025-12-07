@@ -10,18 +10,21 @@ import HomepageFeatures from '../components/HomepageFeatures';
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <h1 className="hero__title">{siteConfig.title}</h1>
-        <p className="hero__subtitle">Your journey into the future of intelligent machines begins here.</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-                                to={useBaseUrl('/introduction')}>            Get Started - 5min ⏱️
-          </Link>
-        </div>
-      </div>
-    </header>
+        <header className={clsx('hero hero--primary', styles.heroBanner)}>
+          <div className={clsx('container', styles.heroBackground)}>
+            <h1 className="hero__title">{siteConfig.title}</h1>
+            <p className="hero__subtitle">Your journey into the future of intelligent machines begins here.</p>
+          </div>
+          <div className={clsx('container', styles.buttonsContainer)}>
+            <div className={styles.buttons}>
+              <Link
+                className="button button--secondary button--lg"
+                to={useBaseUrl('/introduction')}>
+                Get Started - 5min ⏱️
+              </Link>
+            </div>
+          </div>
+        </header>
   );
 }
 
