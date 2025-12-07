@@ -1,0 +1,27 @@
+# Node.js
+node_modules/
+dist/
+build/
+*.log
+.env*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Docusaurus
+book/build/
+book/node_modules/
+book/.docusaurus/
+book/public/
+
+# Universal
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.vscode/
+.idea/
