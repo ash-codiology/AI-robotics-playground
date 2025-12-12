@@ -1,106 +1,55 @@
-<!-- Sync Impact Report:
-Version change: None -> 1.0.0
-List of modified principles: None
-Added sections: Key Standards, Content Standards, Constraints, Success Criteria
-Removed sections: None
-Templates requiring updates:
-- .specify/templates/plan-template.md: ⚠ pending
-- .specify/templates/spec-template.md: ⚠ pending
-- .specify/templates/tasks-template.md: ⚠ pending
-- .specify/templates/commands/*.md: ⚠ pending
-- README.md: ⚠ pending
-- docs/quickstart.md: ⚠ pending
-Follow-up TODOs: None
--->
-# AI/Spec-Driven Book Creation using Docusaurus, Spec-Kit Plus, and Claude Code Constitution
+# [PROJECT_NAME] Constitution
+<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
 
 ## Core Principles
 
-### AI-Native Writing Workflow
-All content is generated, structured, or refined using Spec-Kit Plus + Claude Code.
+### [PRINCIPLE_1_NAME]
+<!-- Example: I. Library-First -->
+[PRINCIPLE_1_DESCRIPTION]
+<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
 
-### Consistency of Style & Voice
-The entire book must maintain the same tone, formatting standards, glossary, and writing style across all chapters.
+### [PRINCIPLE_2_NAME]
+<!-- Example: II. CLI Interface -->
+[PRINCIPLE_2_DESCRIPTION]
+<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
 
-### Technical Clarity
-Explanations should be clear enough for beginners but precise enough for intermediate developers.
+### [PRINCIPLE_3_NAME]
+<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
+[PRINCIPLE_3_DESCRIPTION]
+<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
 
-### Modular Documentation
-Each chapter must be standalone, linkable, and reusable.
+### [PRINCIPLE_4_NAME]
+<!-- Example: IV. Integration Testing -->
+[PRINCIPLE_4_DESCRIPTION]
+<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
 
-### Truthfulness
-All facts about tools, technologies, and workflows must be accurate and up-to-date.
+### [PRINCIPLE_5_NAME]
+<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
+[PRINCIPLE_5_DESCRIPTION]
+<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
 
-## Key Standards
+### [PRINCIPLE_6_NAME]
 
-### Writing Format
-- Markdown (MDX) compatible with Docusaurus
-- Headings follow Docusaurus structure (H1 → H6)
-- Code examples validated before insertion
 
-### Style & Voice
-- Concise, clean, and tutorial-first
-- Use simple English—avoid unnecessary jargon
-- Bullet points > long paragraphs
+[PRINCIPLE__DESCRIPTION]
 
-### Documentation Practices
-- All commands must be runnable
-- All steps must be reproducible
-- Include tips, warnings, best practices
+## [SECTION_2_NAME]
+<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
 
-## Content Standards
+[SECTION_2_CONTENT]
+<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
 
-### Book Requirements
-- Chapters: Minimum 8, preferred 10–12
-- Each chapter ends with:
-    - Summary
-    - Key takeaways
-    - Practical example
-- Include diagrams (ASCII or Mermaid) where needed
+## [SECTION_3_NAME]
+<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
 
-### Sources and Verification
-- Tool references must link to official documentation
-- No outdated commands or APIs
-- AI-generated content must be validated manually
-
-### No Plagiarism
-- 100% original writing required
-- Paraphrase instead of copying from websites
-
-## Constraints
-
-### Book Length
-12,000–20,000 words total
-
-### Tools Required
-- Spec-Kit Plus
-- Claude Code
-- Docusaurus latest version
-- GitHub Pages for deployment
-
-### Project Structure
-- Must follow Spec-Kit Plus templates
-- Each chapter stored in its own folder
-- Configs version-controlled in GitHub
-
-## Success Criteria
-
-### Book Quality
-- Entire book builds without errors in Docusaurus
-- Smooth navigation, clean sidebar, and working links
-- All examples tested and functioning
-
-### Review Process
-- Passes Spec-Kit Plus linting
-- Passes AI fact-checking through Claude Code
-- Zero broken links
-
-### Deployment
-- Live GitHub Pages site working
-- Responsive and readable on mobile
-- SEO meta tags correctly generated
+[SECTION_3_CONTENT]
+<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
 
 ## Governance
-All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance
+<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-**Version**: 1.0.0 | **Ratified**: 2025-12-05 | **Last Amended**: 2025-12-05
+[GOVERNANCE_RULES]
+<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+
+**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
+<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->

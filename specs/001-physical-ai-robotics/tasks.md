@@ -28,18 +28,18 @@ description: "Task list for Physical AI & Humanoid Robotics Textbook implementat
 
 **Purpose**: Project initialization and basic structure for the Docusaurus site and examples.
 
-- [ ] T001 Create base Docusaurus project structure in `/book/`
-- [ ] T002 [P] Create `book/docs/` directory
-- [ ] T003 [P] Create `book/examples/` directory
-- [ ] T004 [P] Create `book/capstone/` directory
-- [ ] T005 [P] Create `book/assets/` directory
-- [ ] T006 [P] Create `book/.github/workflows/` directory
-- [ ] T007 Initialize Git LFS for assets in `book/assets/`
-- [ ] T008 Create `book/VERSIONS.md`
-- [ ] T009 Create `book/DEPLOY.md`
-- [ ] T010 Create `book/.github/workflows/ci.yml`
-- [ ] T011 Create `book/.github/workflows/deploy.yml`
-- [ ] T012 Create `book/README.md`
+- [X] T001 Create base Docusaurus project structure in `/book/`
+- [X] T002 [P] Create `book/docs/` directory
+- [X] T003 [P] Create `book/examples/` directory
+- [X] T004 [P] Create `book/capstone/` directory
+- [X] T005 [P] Create `book/assets/` directory
+- [X] T006 [P] Create `book/.github/workflows/` directory
+- [X] T007 Initialize Git LFS for assets in `book/assets/`
+- [X] T008 Create `book/VERSIONS.md`
+- [X] T009 Create `book/DEPLOY.md`
+- [X] T010 Create `book/.github/workflows/ci.yml`
+- [X] T011 Create `book/.github/workflows/deploy.yml`
+- [X] T012 Create `book/README.md`
 
 ---
 
@@ -49,12 +49,12 @@ description: "Task list for Physical AI & Humanoid Robotics Textbook implementat
 
 **⚠️ CRITICAL**: No user story content creation can begin until this phase is complete
 
-- [ ] T013 Create `book/docusaurus.config.ts` with base configuration
-- [ ] T014 Configure Docusaurus sidebar mapping for modules in `book/sidebars.ts`
-- [ ] T015 Implement Docusaurus search (Algolia or local) in `book/docusaurus.config.ts`
-- [ ] T016 Implement Docusaurus dark/light toggle in `book/docusaurus.config.ts`
-- [ ] T017 Configure "Open in GitHub" edit link on Docusaurus pages (`book/docusaurus.config.ts`)
-- [ ] T018 Set up static assets under `book/static/assets/` in Docusaurus config and project structure
+- [X] T013 Create `book/docusaurus.config.ts` with base configuration
+- [X] T014 Configure Docusaurus sidebar mapping for modules in `book/sidebars.ts`
+- [X] T015 Implement Docusaurus search (Algolia or local) in `book/docusaurus.config.ts`
+- [X] T016 Implement Docusaurus dark/light toggle in `book/docusaurus.config.ts`
+- [X] T017 Configure "Open in GitHub" edit link on Docusaurus pages (`book/docusaurus.config.ts`)
+- [X] T018 Set up static assets under `book/static/assets/` in Docusaurus config and project structure
 
 **Checkpoint**: Docusaurus foundation ready - user story content creation can now begin.
 
@@ -68,11 +68,11 @@ description: "Task list for Physical AI & Humanoid Robotics Textbook implementat
 
 ### Implementation for User Story 1
 
-- [ ] T019 [US1] Create `book/docs/introduction/index.md` for Introduction module
-- [ ] T020 [US1] Add content for Purpose, Key Concepts, and Learning outcomes to `book/docs/introduction/index.md`
-- [ ] T021 [US1] Add placeholder/embed for Human vs robot cognition diagram in `book/docs/introduction/index.md`
-- [ ] T022 [US1] Add placeholder/embed for Course workflow diagram in `book/docs/introduction/index.md`
-- [ ] T023 [US1] Ensure homepage link points to introduction (`book/src/pages/index.tsx`)
+- [X] T019 [US1] Create `book/docs/introduction/index.md` for Introduction module
+- [X] T020 [US1] Add content for Purpose, Key Concepts, and Learning outcomes to `book/docs/introduction/index.md`
+- [X] T021 [US1] Add placeholder/embed for Human vs robot cognition diagram in `book/docs/introduction/index.md`
+- [X] T022 [US1] Add placeholder/embed for Course workflow diagram in `book/docs/introduction/index.md`
+- [X] T023 [US1] Ensure homepage link points to introduction (`book/src/pages/index.tsx`)
 
 **Checkpoint**: At this point, the Introduction module should be complete and readable.
 
@@ -86,7 +86,7 @@ description: "Task list for Physical AI & Humanoid Robotics Textbook implementat
 
 ### Implementation for User Story 2
 
-- [ ] T024 [P] [US2] Create `book/docs/module-1-ros2/index.md` for Module 1 (ROS2)
+- [X] T024 [P] [US2] Create `book/docs/module-1-ros2/index.md` for Module 1 (ROS2)
 - [ ] T025 [P] [US2] Create `book/examples/01_ros2/README.md`
 - [ ] T026 [P] [US2] Create `book/examples/01_ros2/package_ros2_baseline/` directory
 - [ ] T027 [P] [US2] Create `book/examples/01_ros2/tests/test_ros_nodes.sh`
