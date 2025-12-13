@@ -1,0 +1,35 @@
+{
+  "name": "rag-chatbot-fullstack",
+  "version": "1.0.0",
+  "description": "RAG Chatbot for Digital Book Readers - Full Stack Application",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently --names \"BACKEND,FRONTEND\" --prefix \"{name}\" --prefix-colors \"yellow.bold,cyan.bold\" \"npm run backend\" \"npm run frontend\"",
+    "dev": "concurrently --names \"BACKEND,FRONTEND\" --prefix \"{name}\" --prefix-colors \"yellow.bold,cyan.bold\" \"npm run backend\" \"npm run frontend\"",
+    "dev:backend": "cd backend && python -m src.api.main",
+    "dev:frontend": "cd book && npx docusaurus start --port 3006",
+    "backend": "cd backend && uvicorn src.api.main:app --reload --port 8000",
+    "backend:prod": "cd backend && uvicorn src.api.main:app --host 0.0.0.0 --port 8000",
+    "frontend": "cd book && npx docusaurus start --port 3006",
+    "build:frontend": "cd book && npm run build",
+    "test": "cd backend && pytest",
+    "install:backend": "cd backend && pip install -r requirements.txt",
+    "install:frontend": "cd book && npm install",
+    "install": "npm run install:backend && npm run install:frontend"
+  },
+  "keywords": [
+    "rag",
+    "chatbot",
+    "fastapi",
+    "cohere",
+    "qdrant"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3"
+  }
+}

@@ -1,0 +1,42 @@
+.testSection {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 8px;
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+.testSection h2 {
+  margin-top: 0;
+  color: var(--ifm-color-primary);
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.card {
+  padding: 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  background-color: var(--ifm-color-emphasis-200);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .buttonGroup .button {
+    width: 100%;
+  }
+
+  .testSection {
+    padding: 1rem;
+  }
+}

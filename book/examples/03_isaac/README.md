@@ -4,11 +4,9 @@ This directory contains examples for Module 3, focusing on NVIDIA Isaac Sim and 
 
 ## Reproducibility Matrix
 
-To ensure reproducibility, please fill in the following details:
-
-- **OS + Distro**: [e.g., Ubuntu 22.04 LTS]
-- **SDK Versions**: [e.g., Isaac Sim 2023.1, Isaac ROS Humble, Nav2, etc.]
-- **Docker Image (if used)**: [e.g., my_isaac_image:latest or N/A]
+- **OS + Distro**: Ubuntu 22.04 LTS
+- **SDK Versions**: Isaac Sim 2023.1, Isaac ROS Humble, ROS2 Humble Hawksbill, Nav2
+- **Docker Image (if used)**: N/A
 - **Test Script**: `book/examples/03_isaac/tests/test_vslam_nav2.py`
-- **How to Run Tests**: Navigate to `book/examples/03_isaac/tests/` and run `python test_vslam_nav2.py`
-- **Expected Output**: [Provide sample logs or snapshots of expected test output]
+- **How to Run Tests**: `cd book/examples/03_isaac/tests && python test_vslam_nav2.py`
+-   **Expected Output**: The script should output "SUCCESS: VSLAM generated a map and Nav2 planned a path."

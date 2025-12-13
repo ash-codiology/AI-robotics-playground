@@ -1,0 +1,35 @@
+.profileIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--ifm-color-emphasis-200);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.profileIcon:hover {
+  background-color: var(--ifm-color-emphasis-300);
+}
+
+.avatarIcon {
+  color: var(--ifm-color-emphasis-700);
+}
+
+.dropdownHeader {
+  padding: 0.5rem 1rem !important;
+  font-weight: bold;
+  color: var(--ifm-color-emphasis-900);
+  pointer-events: none;
+}
+
+.signOutButton {
+  color: var(--ifm-color-danger) !important;
+}
+
+.signOutButton:hover {
+  color: var(--ifm-color-danger-dark) !important;
+  background-color: var(--ifm-color-danger-100) !important;
+}

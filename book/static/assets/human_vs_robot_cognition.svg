@@ -1,0 +1,58 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font: bold 24px sans-serif; fill: #333; }
+    .subtitle { font: 18px sans-serif; fill: #555; }
+    .box { fill: #eef5fb; stroke: #3498db; stroke-width: 2; rx: 10; ry: 10; }
+    .label { font: 16px sans-serif; fill: #2c3e50; }
+    .arrow { stroke: #2c3e50; stroke-width: 2; marker-end: url(#arrowhead); }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7"
+      refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" class="title">Human vs Robot Cognition</text>
+
+  <!-- Human Column -->
+  <rect x="100" y="80" width="250" height="480" class="box"/>
+  <text x="225" y="110" text-anchor="middle" class="subtitle">Human Cognition</text>
+
+  <text x="120" y="150" class="label">• Intuitive understanding</text>
+  <text x="120" y="180" class="label">• Emotional intelligence</text>
+  <text x="120" y="210" class="label">• Contextual awareness</text>
+  <text x="120" y="240" class="label">• Creative problem solving</text>
+  <text x="120" y="270" class="label">• Adaptability</text>
+  <text x="120" y="300" class="label">• Social interaction</text>
+  <text x="120" y="330" class="label">• Embodied learning</text>
+  <text x="120" y="360" class="label">• Pattern recognition</text>
+  <text x="120" y="390" class="label">• Tacit knowledge</text>
+  <text x="120" y="420" class="label">• Holistic thinking</text>
+
+  <!-- Robot Column -->
+  <rect x="450" y="80" width="250" height="480" class="box"/>
+  <text x="575" y="110" text-anchor="middle" class="subtitle">Robot Cognition</text>
+
+  <text x="470" y="150" class="label">• Precise calculations</text>
+  <text x="470" y="180" class="label">• High-speed processing</text>
+  <text x="470" y="210" class="label">• Consistent performance</text>
+  <text x="470" y="240" class="label">• Sensor fusion</text>
+  <text x="470" y="270" class="label">• Predictive modeling</text>
+  <text x="470" y="300" class="label">• Task optimization</text>
+  <text x="470" y="330" class="label">• Real-time control</text>
+  <text x="470" y="360" class="label">• Data-driven decisions</text>
+  <text x="470" y="390" class="label">• Algorithmic reasoning</text>
+  <text x="470" y="420" class="label">• Rule-based logic</text>
+
+  <!-- Comparison arrow -->
+  <line x1="350" y1="300" x2="450" y2="300" class="arrow"/>
+  <text x="400" y="290" text-anchor="middle" class="label">Comparison</text>
+
+  <!-- Collaboration concept -->
+  <ellipse cx="400" cy="500" rx="120" ry="40" fill="#f9f3d3" stroke="#f39c12" stroke-width="2"/>
+  <text x="400" y="505" text-anchor="middle" class="label">Synergy through</text>
+  <text x="400" y="525" text-anchor="middle" class="label">Human-Robot Collaboration</text>
+</svg>

@@ -1,5 +1,5 @@
 ---
-id: module-4-vla
+id: index
 title: Vision-Language-Action (VLA)
 sidebar_position: 5
 ---

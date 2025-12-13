@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(mkdir:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :3000)"
     ],
     "deny": [],
     "ask": []

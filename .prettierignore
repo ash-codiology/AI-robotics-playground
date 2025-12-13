@@ -5,3 +5,8 @@ coverage/
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
+/book/build/
+/book/.docusaurus/
+/my-book/build/
+/my-book/.docusaurus/
+*.md

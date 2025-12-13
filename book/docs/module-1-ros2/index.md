@@ -1,5 +1,5 @@
 ---
-id: module-1-ros2
+id: index
 title: The Robotic Nervous System (ROS 2)
 sidebar_position: 2
 ---

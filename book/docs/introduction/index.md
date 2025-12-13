@@ -1,5 +1,5 @@
 ---
-id: introduction
+id: index
 title: Introduction to Physical AI
 sidebar_position: 1
 ---
@@ -32,8 +32,8 @@ Upon completing this introduction, you will be able to:
 
 ### Human vs Robot Cognition
 
-![Human vs Robot Cognition Diagram Placeholder](@site/static/assets/human_vs_robot_cognition.png) <!-- Placeholder for diagram -->
+![Human vs Robot Cognition Diagram](@site/static/assets/human_vs_robot_cognition.svg)
 
 ### Course Workflow Diagram
 
-![Course Workflow Diagram Placeholder](@site/static/assets/course_workflow.png) <!-- Placeholder for diagram -->
+![Course Workflow Diagram](@site/static/assets/course_workflow_simple.svg)

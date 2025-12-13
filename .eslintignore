@@ -3,3 +3,9 @@ dist/
 build/
 coverage/
 *.min.js
+*.spec.js
+*.test.js
+/book/build/
+/book/.docusaurus/
+/my-book/build/
+/my-book/.docusaurus/
