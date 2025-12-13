@@ -1,0 +1,48 @@
+.userBanner {
+  background-color: var(--ifm-color-emphasis-200);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.userName {
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.logoutButton {
+  background-color: var(--ifm-color-danger);
+  color: white;
+  border: none;
+  padding: 0.375rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-weight: 500;
+}
+
+.logoutButton:hover {
+  background-color: var(--ifm-color-danger-dark);
+}
+
+@media (max-width: 996px) {
+  .userInfo {
+    justify-content: center;
+  }
+
+  .userName {
+    display: none;
+  }
+
+  .logoutButton {
+    padding: 0.375rem 1rem;
+  }
+}

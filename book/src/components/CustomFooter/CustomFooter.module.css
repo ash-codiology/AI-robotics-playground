@@ -1,0 +1,122 @@
+.footer {
+  padding: 2rem 0 1rem 0;
+  background-color: var(--ifm-footer-background-color, var(--ifm-color-emphasis-100));
+  color: var(--ifm-footer-color, var(--ifm-color-emphasis-800));
+}
+
+.footerTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--ifm-footer-title-color, var(--ifm-color-emphasis-900));
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.footerDescription {
+  color: var(--ifm-footer-link-color, var(--ifm-color-emphasis-600));
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.footerLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerLinks li {
+  margin-bottom: 0.75rem;
+}
+
+.footerLinks a {
+  color: var(--ifm-footer-link-color, var(--ifm-color-emphasis-700));
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+  display: block;
+}
+
+.footerLinks a:hover {
+  color: var(--ifm-footer-link-hover-color, var(--ifm-color-primary));
+  text-decoration: underline;
+}
+
+.footerBottom {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.copyright {
+  color: var(--ifm-footer-copyright-color, var(--ifm-color-emphasis-600));
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.socialLinks {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-700);
+  transition: all 0.2s;
+}
+
+.socialLink:hover {
+  background-color: var(--ifm-color-primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.socialIcon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+@media (max-width: 996px) {
+  .footer {
+    padding: 1.5rem 0;
+  }
+
+  .footerTitle {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .footerLinks a {
+    font-size: 0.85rem;
+  }
+
+  .socialLinks {
+    justify-content: flex-start;
+  }
+
+  .copyright {
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer .row > div {
+    margin-bottom: 1.5rem;
+  }
+
+  .footerBottom .row > div {
+    text-align: center;
+  }
+
+  .socialLinks {
+    justify-content: center;
+  }
+}

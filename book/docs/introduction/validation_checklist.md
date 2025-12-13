@@ -33,11 +33,11 @@ This checklist guides a human reviewer through the "Introduction to Physical AI"
 - [ ] **Human vs Robot Cognition Diagram**:
   - [ ] Is the diagram clearly presented?
   - [ ] Is its purpose and message easy to understand?
-  - [ ] Is the image placeholder correctly rendered?
+  - [ ] Is the image correctly rendered?
 - [ ] **Course Workflow Diagram**:
   - [ ] Is the diagram clearly presented?
   - [ ] Is its purpose and message easy to understand?
-  - [ ] Is the image placeholder correctly rendered?
+  - [ ] Is the image correctly rendered?
 - [ ] **Clarity**: Are all diagrams and figures clear, legible, and directly support the text?
 - [ ] **Accuracy**: Do diagrams accurately represent the concepts?
 

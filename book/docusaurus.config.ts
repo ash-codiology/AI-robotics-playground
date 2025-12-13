@@ -45,6 +45,19 @@ const config: Config = {
     ],
   ],
 
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          {
+            to: '/login',
+            from: ['/signin', '/signup'],
+          },
+        ],
+      },
+    ],
+  ],
   themeConfig: {
     image: 'img/docusaurus-social-card.jpg',
     colorMode: {
@@ -64,6 +77,36 @@ const config: Config = {
           sidebarId: 'defaultSidebar',
           position: 'left',
           label: 'Textbook',
+        },
+        {
+          type: 'dropdown',
+          label: 'Tools',
+          position: 'left',
+          items: [
+            {
+              label: 'Search',
+              to: '/search',
+            },
+            {
+              label: 'System Test',
+              to: '/system-test',
+            },
+          ],
+        },
+        {
+          type: 'dropdown',
+          label: 'Account',
+          position: 'right',
+          items: [
+            {
+              label: 'Sign In',
+              to: '/login',
+            },
+            {
+              label: 'Sign Up',
+              to: '/login',
+            },
+          ],
         },
         {
           href: `https://github.com/${GITHUB_USERNAME}/${GITHUB_REPO_NAME}`,
@@ -126,14 +169,17 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} Physical AI Community. Built with Docusaurus.`,
     },
     algolia: {
-      appId: 'YOUR_APP_ID',
-      apiKey: 'YOUR_SEARCH_API_KEY',
+      appId: process.env.ALGOLIA_APP_ID || 'YOUR_APP_ID',
+      apiKey: process.env.ALGOLIA_SEARCH_API_KEY || 'YOUR_SEARCH_API_KEY',
       indexName: 'physical-ai-robotics',
       contextualSearch: true,
       searchParameters: {
         facetFilters: ['language:en'],
       },
       searchPagePath: 'search',
+      // Optional: adjust how search results are displayed
+      searchResultLimits: 8,
+      searchResultContextLength: 250,
     },
     prism: {
       theme: prismThemes.github,
