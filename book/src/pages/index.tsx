@@ -18,12 +18,12 @@ function HomepageHeader() {
             <div className={styles.buttons}>
               <Link
                 className="button button--secondary button--lg"
-                to={useBaseUrl('/introduction')}>
+                to={useBaseUrl('/docs/introduction')}>
                 Get Started - 5min ⏱️
               </Link>
               <Link
                 className="button button--primary button--lg margin-left--md"
-                to={useBaseUrl('/category/modules')}>
+                to={useBaseUrl('/docs/category/modules')}>
                 Explore Modules
               </Link>
             </div>
@@ -132,32 +132,42 @@ function CourseModules() {
     {
       title: "Module 01: ROS2 Fundamentals",
       description: "Core concepts, tools, and best practices for building robust robotic applications.",
-      link: "/module-1-ros2"
+      link: "/docs/module-1-ros2"
     },
     {
       title: "Module 02: Robotic Simulation",
       description: "Creating, configuring, and deploying robots in virtual environments for testing.",
-      link: "/module-2-simulation"
+      link: "/docs/module-2-simulation"
     },
     {
       title: "Module 03: NVIDIA Isaac Sim",
       description: "Leveraging advanced simulation platforms for realistic robot development.",
-      link: "/module-3-isaac"
+      link: "/docs/module-3-isaac"
     },
     {
       title: "Module 04: Vision-Language-Action Models",
       description: "Integrating visual perception, language understanding, and physical actions.",
-      link: "/module-4-vla"
+      link: "/docs/module-4-vla"
     },
     {
       title: "Module 05: Foundations of Embodied Intelligence",
       description: "Understanding how intelligence emerges from physical interaction with the world.",
-      link: "/module-5-foundations-of-embodied-intelligence"
+      link: "/docs/module-5-foundations-of-embodied-intelligence"
     },
     {
       title: "Module 06: Cognitive Motion Planning & Autonomous Behavior",
       description: "Designing intelligent navigation and decision-making for robots.",
-      link: "/module-6-cognitive-motion-planning-autonomous-behavior"
+      link: "/docs/module-6-cognitive-motion-planning-autonomous-behavior"
+    },
+    {
+      title: "Module 07: Human-Robot Interaction & Safety Frameworks",
+      description: "Principles, design considerations, and safety frameworks for effective HRI.",
+      link: "/docs/module-7-human-robot-interaction-safety-frameworks"
+    },
+    {
+      title: "Module 08: Whole-Body Kinematics, Dynamics & Control Systems",
+      description: "Mathematical foundations and control strategies for multi-body systems.",
+      link: "/docs/module-8-whole-body-kinematics-dynamics-control-systems"
     }
   ];
 
@@ -189,7 +199,7 @@ function CourseModules() {
           <div className="col col--12 text--center">
             <Link
               className="button button--primary button--lg"
-              to={useBaseUrl('/category/modules')}>
+              to={useBaseUrl('/docs/category/modules')}>
               View All Modules
             </Link>
           </div>
@@ -211,7 +221,7 @@ function CapstoneProject() {
             </p>
             <Link
               className="button button--secondary button--lg"
-              to={useBaseUrl('/capstone/capstone')}>
+              to={useBaseUrl('/docs/capstone/capstone')}>
               Explore Capstone
             </Link>
           </div>
@@ -239,6 +249,9 @@ export default function Home(): JSX.Element {
               <div className="col col--12 text--center">
                 <h2>Additional Resources</h2>
                 <div className={styles.resources}>
+                  <Link to="/docs/category/modules" className={styles.resourceLink}>
+                    All Course Modules
+                  </Link>
                   <Link to="https://github.com/ahundt/awesome-robotics" target="_blank" rel="noopener noreferrer">
                     Awesome Robotics List
                   </Link>

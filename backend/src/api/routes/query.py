@@ -34,11 +34,14 @@ async def query_endpoint(
         # Validate and sanitize the request
         validated_request = validate_and_sanitize_request(request)
 
-        # Convert API request to RAG request
+        # Convert API request to RAG request with conversation support
         rag_request = RAGRequest(
             query=validated_request.query,
             selected_text=validated_request.selected_text,
-            mode=validated_request.mode
+            mode=validated_request.mode,
+            conversation_id=getattr(validated_request, 'conversation_id', None),
+            temperature=getattr(validated_request, 'temperature', 0.7),
+            max_tokens=getattr(validated_request, 'max_tokens', 500)
         )
 
         # Process the query differently based on mode
@@ -53,7 +56,8 @@ async def query_endpoint(
         api_response = QueryResponse(
             response=rag_response.response,
             source_metadata=format_attribution_for_response(rag_response.source_chunks),
-            mode_used=rag_response.mode_used
+            mode_used=rag_response.mode_used,
+            conversation_id=rag_response.conversation_id
         )
 
         logger.info("Query processed successfully")

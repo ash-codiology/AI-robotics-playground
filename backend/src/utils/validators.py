@@ -25,16 +25,17 @@ class QueryValidator:
             raise ValueError("Query cannot be empty")
 
         # Check query length
-        if len(request.query.strip()) < 3:
-            raise ValueError("Query must be at least 3 characters long")
+        min_length = 1 if request.mode == 'conversation' else 3
+        if len(request.query.strip()) < min_length:
+            raise ValueError(f"Query must be at least {min_length} characters long")
 
         # Check maximum query length
         if len(request.query) > 1000:
             raise ValueError("Query exceeds maximum length of 1000 characters")
 
         # Validate mode if provided
-        if request.mode and request.mode not in ['full_book', 'selected_text']:
-            raise ValueError("Mode must be either 'full_book' or 'selected_text'")
+        if request.mode and request.mode not in ['full_book', 'selected_text', 'conversation']:
+            raise ValueError("Mode must be either 'full_book', 'selected_text', or 'conversation'")
 
         # If selected_text is provided, validate it
         if request.selected_text is not None:

@@ -3,9 +3,9 @@ import Layout from '@theme/Layout';
 import SearchBar from '@theme/SearchBar';
 import styles from './search.module.css';
 
-const SearchPage: React.FC = () => {
+const GlobalSearchPage: React.FC = () => {
   return (
-    <Layout title="Search" description="Search the Physical AI & Humanoid Robotics Course">
+    <Layout title="Global Search" description="Search the Physical AI & Humanoid Robotics Course">
       <div className="container margin-vert--lg">
         <div className="row">
           <div className="col col--8 col--offset-2">
@@ -28,4 +28,4 @@ const SearchPage: React.FC = () => {
   );
 };
 
-export default SearchPage;
+export default GlobalSearchPage;

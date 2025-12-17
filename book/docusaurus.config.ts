@@ -1,6 +1,5 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
-import type * as Preset from '@docusaurus/preset-classic';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 
 const GITHUB_USERNAME = 'ash-codiology';
 const GITHUB_REPO_NAME = 'AI-robotics-playground';
@@ -10,54 +9,47 @@ const config: Config = {
   tagline: 'From Digital Minds to Physical Robots',
   favicon: 'img/favicon.ico',
 
-  future: {
-    v4: true,
-  },
-
   url: `https://${GITHUB_USERNAME}.github.io`,
   baseUrl: `/${GITHUB_REPO_NAME}/`,
 
   organizationName: GITHUB_USERNAME,
   projectName: GITHUB_REPO_NAME,
 
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
-
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',  // Add this line to explicitly set markdown links to warn
+  markdown: {
+    mermaid: true,
+    mdx1Compat: {
+      comments: true,
+      admonitions: true,
+      headingIds: true,
+    },
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
   },
+
+  i18n: { defaultLocale: 'en', locales: ['en'] },
 
   presets: [
     [
       'classic',
       {
         docs: {
-          sidebarPath: './sidebars.ts',
-          editUrl: `https://github.com/${GITHUB_USERNAME}/${GITHUB_REPO_NAME}/tree/main/book`,
-          routeBasePath: '/',
+          sidebarPath: require.resolve('./sidebars.ts'),
+          editUrl: `https://github.com/${GITHUB_USERNAME}/${GITHUB_REPO_NAME}/edit/main/book`,
+          routeBasePath: 'docs',
         },
         blog: false,
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: require.resolve('./src/css/custom.css'),
         },
-      } satisfies Preset.Options,
-    ],
-  ],
-
-  plugins: [
-    [
-      '@docusaurus/plugin-client-redirects',
-      {
-        redirects: [
-          {
-            to: '/login',
-            from: ['/signin', '/signup'],
-          },
-        ],
       },
     ],
   ],
+
+  plugins: [],
+
   themeConfig: {
     image: 'img/docusaurus-social-card.jpg',
     colorMode: {
@@ -66,118 +58,60 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Physical AI & Humanoid Robotics Course',
-      logo: {
-        alt: 'Physical AI & Humanoid Robotics Logo',
-        src: 'img/logo.svg',
-      },
+      title: 'Physical AI & Robotics',
+      logo: { alt: 'Logo', src: 'img/logo.svg' },
       items: [
-        {
-          type: 'docSidebar',
-          sidebarId: 'defaultSidebar',
-          position: 'left',
-          label: 'Textbook',
-        },
         {
           type: 'dropdown',
           label: 'Tools',
           position: 'left',
-          items: [
-            {
-              label: 'Search',
-              to: '/search',
-            },
-            {
-              label: 'System Test',
-              to: '/system-test',
-            },
-          ],
+          items: [{ label: 'System Test', to: '/system-test' }],
         },
         {
           type: 'dropdown',
           label: 'Account',
           position: 'right',
           items: [
-            {
-              label: 'Sign In',
-              to: '/login',
-            },
-            {
-              label: 'Sign Up',
-              to: '/login',
-            },
+            { label: 'Sign In', to: '/login' },
+            { label: 'Sign Up', to: '/login' },
           ],
         },
-        {
-          href: `https://github.com/${GITHUB_USERNAME}/${GITHUB_REPO_NAME}`,
-          label: 'GitHub',
-          position: 'right',
-        },
+        { href: `https://github.com/${GITHUB_USERNAME}/${GITHUB_REPO_NAME}`, label: 'GitHub', position: 'right' },
       ],
     },
     footer: {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'Features',
           items: [
-            {
-              label: 'Introduction',
-              to: '/introduction',
-            },
-            {
-              label: 'ROS 2',
-              to: '/module-1-ros2',
-            },
-            {
-              label: 'Simulation',
-              to: '/module-2-simulation',
-            },
-            {
-              label: 'Isaac',
-              to: '/module-3-isaac',
-            },
-            {
-              label: 'VLA',
-              to: '/module-4-vla',
-            },
+            { label: 'Smart Search', to: '/' },
+            { label: 'Source Citations', to: '/' },
+            { label: 'AI Answers', to: '/' },
           ],
         },
         {
           title: 'Community',
           items: [
-            {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/ros2',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discord.gg/robotics',
-            },
+            { label: 'GitHub', href: `https://github.com/${GITHUB_USERNAME}/${GITHUB_REPO_NAME}` },
           ],
         },
         {
           title: 'More',
           items: [
-            {
-              label: 'GitHub',
-              href: `https://github.com/${GITHUB_USERNAME}/${GITHUB_REPO_NAME}`,
-            },
+            { label: 'Documentation', to: '/' },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Physical AI Community. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} RAG Chatbot Project. Built with Docusaurus.`,
     },
     algolia: {
       appId: process.env.ALGOLIA_APP_ID || 'YOUR_APP_ID',
       apiKey: process.env.ALGOLIA_SEARCH_API_KEY || 'YOUR_SEARCH_API_KEY',
-      indexName: 'physical-ai-robotics',
+      indexName: 'rag-chatbot-books',
       contextualSearch: true,
-      searchParameters: {
-        facetFilters: ['language:en'],
-      },
-      searchPagePath: 'search',
-      // Optional: adjust how search results are displayed
+      searchParameters: { facetFilters: ['language:en'] },
+      searchPagePath: null,
       searchResultLimits: 8,
       searchResultContextLength: 250,
     },
@@ -186,8 +120,7 @@ const config: Config = {
       darkTheme: prismThemes.dracula,
       additionalLanguages: ['bash', 'diff', 'json'],
     },
-  } satisfies Preset.ThemeConfig,
+  },
 };
 
 export default config;
-

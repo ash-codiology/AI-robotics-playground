@@ -10,8 +10,14 @@ class Settings(BaseSettings):
     api_host: str = "0.0.0.0"
     api_port: int = 8000
 
-    # Cohere Configuration
-    cohere_api_key: str
+    # LLM Provider Configuration
+    llm_provider: str = "gemini"  # Options: gemini, openai, anthropic, ollama, openrouter
+    google_gemini_api_key: str = ""
+    openai_api_key: str = ""
+    anthropic_api_key: str = ""
+    ollama_base_url: str = "http://localhost:11434"
+    openrouter_api_key: str = ""
+    default_model: str = "gemini-2.0-flash"  # Default model to use
 
     # Qdrant Configuration
     qdrant_api_key: str

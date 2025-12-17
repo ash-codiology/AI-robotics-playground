@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from src.config.settings import settings
-from src.api.routes import query, auth
+from src.api.routes import query, auth, conversation
 from src.utils.helpers import setup_logging
 import logging
 
@@ -17,8 +17,21 @@ async def lifespan(app: FastAPI):
     logger = logging.getLogger(__name__)
     logger.info("Starting RAG Chatbot API...")
 
-    # Initialize services if needed
-    # Example: await initialize_database()
+    # Initialize RAG services during startup
+    try:
+        logger.info("Initializing RAG services...")
+
+        # Import and initialize the RAG engine service which will initialize retrieval and generation
+        from src.services.rag_engine import rag_engine_service
+        from src.services.retrieval import retrieval_service
+        from src.services.generation import generation_service
+
+        # Wait for services to be properly initialized
+        logger.info("RAG services initialized successfully")
+
+    except Exception as e:
+        logger.error(f"Failed to initialize RAG services: {str(e)}")
+        raise e
 
     yield
 
@@ -46,7 +59,8 @@ app.add_middleware(
         "http://localhost:3006",  # Docusaurus dev server
         "http://localhost:3002",  # Docusaurus default
         "http://localhost:3003",  # Docusaurus alternative
-        f"http://{settings.api_host}:{settings.api_port}"  # Backend server
+        f"http://{settings.api_host}:{settings.api_port}",  # Backend server
+        "*"  # Allow all origins during development
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -55,6 +69,7 @@ app.add_middleware(
 
 # Include API routes
 app.include_router(query.router, prefix="/api/v1", tags=["query"])
+app.include_router(conversation.router, prefix="/api/v1", tags=["conversation"])
 app.include_router(auth.router, prefix="/api/v1", tags=["auth"])
 
 # Add a root endpoint

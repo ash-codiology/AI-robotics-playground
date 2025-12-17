@@ -1,0 +1,506 @@
+"""
+Content loader utility to ensure the vector database has content for the RAG system.
+This module handles loading content into the vector database, with fallback to in-memory storage.
+"""
+import os
+import re
+from pathlib import Path
+from typing import List, Dict, Any
+import hashlib
+import logging
+import time
+
+from qdrant_client.http import models
+
+# Try to import sentence-transformers as a fallback for embeddings
+EMBEDDING_MODEL_AVAILABLE = False
+embedding_model = None
+
+try:
+    from sentence_transformers import SentenceTransformer
+    embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
+    EMBEDDING_MODEL_AVAILABLE = True
+    logging.info("Local embedding model loaded successfully")
+except ImportError as e:
+    logging.warning(f"sentence-transformers not available due to import error: {str(e)}, local embeddings will not be available")
+except OSError as e:
+    # Handle Windows-specific DLL loading issues (PyTorch dependency problems)
+    logging.warning(f"Local embedding model not available due to system dependency error: {str(e)}")
+    logging.warning("On Windows, you may need to install Microsoft Visual C++ Redistributable for PyTorch to work")
+except Exception as e:
+    logging.warning(f"Local embedding model failed to load with error: {str(e)}")
+
+from src.config.settings import settings
+
+logger = logging.getLogger(__name__)
+
+
+def extract_text_from_md(file_path: str) -> str:
+    """Extract text content from a markdown file, removing markdown syntax."""
+    with open(file_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    # Remove markdown headers, but keep the text
+    # Remove headers like # Header, ## Header, etc.
+    content = re.sub(r'^#+\s+', '', content, flags=re.MULTILINE)
+
+    # Remove bold and italic markers
+    content = re.sub(r'\*\*(.*?)\*\*', r'\1', content)
+    content = re.sub(r'\*(.*?)\*', r'\1', content)
+    content = re.sub(r'__(.*?)__', r'\1', content)
+    content = re.sub(r'_(.*?)_', r'\1', content)
+
+    # Remove links [text](url) -> text
+    content = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', content)
+
+    # Remove images
+    content = re.sub(r'!\[([^\]]*)\]\([^)]+\)', '', content)
+
+    # Remove code blocks
+    content = re.sub(r'```.*?```', '', content, flags=re.DOTALL)
+
+    # Remove inline code
+    content = re.sub(r'`([^`]+)`', r'\1', content)
+
+    # Remove extra whitespace
+    content = re.sub(r'\n\s*\n', '\n\n', content)
+
+    return content.strip()
+
+
+def chunk_text(text: str, chunk_size: int = 500, overlap: int = 50) -> List[str]:
+    """Split text into overlapping chunks."""
+    if len(text) <= chunk_size:
+        return [text]
+
+    chunks = []
+    start = 0
+
+    while start < len(text):
+        end = start + chunk_size
+
+        # If we're near the end, just take the rest
+        if end >= len(text):
+            chunks.append(text[start:])
+            break
+
+        # Try to break at sentence boundary
+        chunk = text[start:end]
+        last_period = chunk.rfind('.')
+        last_space = chunk.rfind(' ')
+
+        if last_period > chunk_size // 2:
+            # Break at the last period if it's reasonably far in
+            actual_end = start + last_period + 1
+        elif last_space > chunk_size // 2:
+            # Otherwise break at the last space
+            actual_end = start + last_space
+        else:
+            # If no good break point, just break at chunk_size
+            actual_end = end
+
+        chunks.append(text[start:actual_end].strip())
+        start = actual_end - overlap
+
+        # Prevent infinite loops
+        if start >= len(text):
+            break
+        if actual_end <= start:
+            # If we're not advancing, take the next chunk_size characters
+            chunks.append(text[start:start + chunk_size].strip())
+            start += chunk_size
+
+    # Filter out empty chunks
+    return [chunk for chunk in chunks if chunk.strip()]
+
+
+def get_all_md_files(docs_dir: str) -> List[str]:
+    """Get all markdown files from the documentation directory."""
+    md_files = []
+    for root, dirs, files in os.walk(docs_dir):
+        for file in files:
+            if file.lower().endswith('.md'):
+                md_files.append(os.path.join(root, file))
+    return md_files
+
+
+def generate_content_id(content: str, source_path: str) -> str:
+    """Generate a unique ID for content based on content hash and source."""
+    import uuid
+    # Use UUID to ensure compatibility with Qdrant
+    return str(uuid.uuid4())
+
+
+def _generate_embeddings_with_rate_limit(texts: List[str], input_type: str = "search_document"):
+    """
+    Generate embeddings using local model.
+    Falls back to zero vectors if local model is not available.
+    """
+    embeddings = []
+
+    # Try using local embedding model as primary method
+    if EMBEDDING_MODEL_AVAILABLE:
+        try:
+            # Process in smaller batches to avoid memory issues
+            batch_size = 10
+            for i in range(0, len(texts), batch_size):
+                batch = texts[i:i + batch_size]
+                batch_embeddings = embedding_model.encode(batch).tolist()
+                embeddings.extend(batch_embeddings)
+                logger.info(f"Successfully generated embeddings with local model for batch of {len(batch)} items")
+        except Exception as local_error:
+            logger.error(f"Error generating embeddings with local model: {str(local_error)}")
+            # Fallback to single item processing with local model
+            for text in texts:
+                try:
+                    single_embedding = embedding_model.encode([text])[0].tolist()
+                    embeddings.append(single_embedding)
+                except Exception as single_local_error:
+                    logger.error(f"Error generating embedding for single text with local model: {str(single_local_error)}")
+                    embeddings.append([0.0] * 384)  # Add zero vector as fallback (local model output size)
+    else:
+        logger.warning("Local embedding model not available, using zero vectors as fallback")
+        # Use zero vectors as fallback
+        for text in texts:
+            embeddings.append([0.0] * 384)  # Use 384-dim vector as fallback
+
+    return embeddings
+
+
+def load_content_to_qdrant(client, collection_name: str):
+    """Load documentation content to Qdrant vector database."""
+    logger.info("Starting content loading process...")
+
+    # Get all markdown files from the docs directory
+    # Try multiple possible paths where docs might be located
+
+    # Path from backend/src/utils to project_root/book/docs
+    # __file__ = backend/src/utils/content_loader.py
+    # So we need to go up 4 levels to reach project root, then down to book/docs
+    docs_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), "book", "docs")
+    logger.info(f"Trying docs path: {docs_dir}")
+
+    # If that doesn't exist, try the path from backend/src to book/docs (go up 2 levels, then down)
+    if not os.path.exists(docs_dir):
+        docs_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "book", "docs")
+        docs_dir = os.path.normpath(docs_dir)  # Normalize the path to resolve ".."
+        logger.info(f"First path not found, trying: {docs_dir}")
+
+    if not os.path.exists(docs_dir):
+        logger.warning(f"Documentation directory not found at {docs_dir}, creating minimal content...")
+        # Create minimal content for the system to work
+        _load_minimal_content(client, collection_name)
+        return collection_name
+    else:
+        logger.info(f"Documentation directory found at {docs_dir}, loading content...")
+
+    md_files = get_all_md_files(docs_dir)
+    logger.info(f"Found {len(md_files)} markdown files to process")
+
+    if not md_files:
+        logger.warning("No markdown files found, creating minimal content...")
+        _load_minimal_content(client, collection_name)
+        return
+
+    all_points_data = []
+
+    for file_path in md_files:
+        logger.info(f"Processing file: {file_path}")
+
+        try:
+            # Extract text from markdown
+            text_content = extract_text_from_md(file_path)
+
+            # Skip empty files
+            if not text_content.strip():
+                logger.info(f"  Skipping empty file: {file_path}")
+                continue
+
+            # Create chunks from the text
+            chunks = chunk_text(text_content)
+            logger.info(f"  Created {len(chunks)} chunks from {file_path}")
+
+            # Create point data for each chunk
+            for i, chunk in enumerate(chunks):
+                if chunk.strip():  # Only add non-empty chunks
+                    content_id = generate_content_id(chunk, f"{file_path}_chunk_{i}")
+
+                    # Extract relative path for metadata
+                    relative_path = os.path.relpath(file_path, os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
+
+                    point_data = {
+                        "id": content_id,
+                        "content": chunk,
+                        "metadata": {
+                            "source_file": relative_path,
+                            "chunk_index": i,
+                            "total_chunks": len(chunks),
+                            "file_path": file_path
+                        }
+                    }
+                    all_points_data.append(point_data)
+
+        except Exception as e:
+            logger.error(f"  Error processing file {file_path}: {str(e)}")
+            continue
+
+    logger.info(f"Total chunks to index: {len(all_points_data)}")
+
+    if not all_points_data:
+        logger.warning("No content to index, creating minimal content...")
+        _load_minimal_content(client, collection_name)
+        return collection_name
+
+    # Batch add content to Qdrant
+    try:
+        logger.info("Indexing content to Qdrant...")
+
+        # Extract all content texts to generate embeddings in batches
+        content_texts = [data["content"] for data in all_points_data]
+
+        # Generate embeddings
+        embeddings = _generate_embeddings_with_rate_limit(content_texts, "search_document")
+
+        points = []
+        for i, (data, embedding) in enumerate(zip(all_points_data, embeddings)):
+            try:
+                # Check if embedding is valid (not a fallback zero vector)
+                if len(embedding) == 0 or all(v == 0.0 for v in embedding):
+                    logger.warning(f"Skipping chunk {i} due to invalid embedding")
+                    continue
+
+                points.append(
+                    models.PointStruct(
+                        id=data["id"],
+                        vector=embedding,
+                        payload={
+                            "content": data["content"],
+                            **data["metadata"]
+                        }
+                    )
+                )
+            except Exception as point_error:
+                logger.error(f"Error creating point for chunk {i}: {str(point_error)}")
+                continue
+
+        if points:
+            # Determine embedding dimensionality from first point
+            embedding_dim = len(points[0].vector) if points and points[0].vector else 384
+
+            # Check if the target collection exists and its vector size matches
+            target_collection = collection_name
+            try:
+                collection_info = client.get_collection(collection_name)
+                # Try robust extraction of vector size from returned object
+                existing_size = None
+                try:
+                    # Newer qdrant-client may expose vectors_config
+                    existing_size = collection_info.vectors_config.size
+                except Exception:
+                    try:
+                        # Older structures may nest config.params.vectors.size
+                        existing_size = collection_info.config.params.vectors.size
+                    except Exception:
+                        try:
+                            # Fallback to dictionary style
+                            existing_size = list(collection_info.vectors.values())[0].size
+                        except Exception:
+                            existing_size = None
+
+                if existing_size and existing_size != embedding_dim:
+                    # Avoid destructive recreate: use a new collection name with dimension suffix
+                    new_name = f"{collection_name}_v{embedding_dim}"
+                    logger.warning(f"Collection '{collection_name}' exists with vector size {existing_size} which does not match embedding dim {embedding_dim}. Using/creating '{new_name}' instead to avoid data loss.")
+                    target_collection = new_name
+                    try:
+                        client.get_collection(target_collection)
+                        logger.info(f"Using existing collection '{target_collection}'")
+                    except Exception:
+                        logger.info(f"Creating collection '{target_collection}' with size {embedding_dim}")
+                        client.create_collection(
+                            collection_name=target_collection,
+                            vectors_config=models.VectorParams(
+                                size=embedding_dim,
+                                distance=models.Distance.COSINE
+                            )
+                        )
+                else:
+                    target_collection = collection_name
+            except Exception:
+                # Collection doesn't exist - create with correct size
+                try:
+                    logger.info(f"Creating collection '{collection_name}' with size {embedding_dim}")
+                    client.create_collection(
+                        collection_name=collection_name,
+                        vectors_config=models.VectorParams(
+                            size=embedding_dim,
+                            distance=models.Distance.COSINE
+                        )
+                    )
+                    target_collection = collection_name
+                except Exception as create_err:
+                    logger.warning(f"Failed to create collection '{collection_name}' with size {embedding_dim}: {str(create_err)}")
+                    # Fallback to using original name and hope the client will accept it
+                    target_collection = collection_name
+
+            # Finally upsert into the chosen target collection
+            client.upsert(
+                collection_name=target_collection,
+                points=points
+            )
+            logger.info(f"Successfully indexed {len(points)} content chunks to Qdrant (collection: {target_collection})")
+            return target_collection
+
+    except Exception as e:
+        logger.error(f"Error indexing content to Qdrant: {str(e)}")
+        logger.info("Creating minimal content as fallback...")
+        _load_minimal_content(client, collection_name)
+        return collection_name
+
+    # Default return if nothing indexed
+    return collection_name
+
+
+def _load_minimal_content(client, collection_name: str):
+    """Load minimal sample content to ensure the system works."""
+    logger.info("Loading minimal sample content...")
+
+    # Sample content about Physical AI & Humanoid Robotics
+    sample_contents = [
+        {
+            "id": str(__import__('uuid').uuid4()),
+            "content": "Physical AI & Humanoid Robotics Course: This course covers the fundamentals of physical artificial intelligence and humanoid robotics. Topics include ROS 2, simulation environments, Isaac Gym, Vision-Language-Action models, and embodied intelligence. The course aims to provide students with both theoretical knowledge and practical skills in developing intelligent robotic systems.",
+            "metadata": {"source": "course_introduction", "type": "overview", "category": "introduction"}
+        },
+        {
+            "id": str(__import__('uuid').uuid4()),
+            "content": "ROS 2 (Robot Operating System 2) is a flexible framework for writing robot software. It is a collection of tools, libraries, and conventions that aim to simplify the task of creating complex and robust robot behavior across a wide variety of robot platforms. ROS 2 provides improved security, real-time support, and better cross-platform compatibility compared to ROS 1.",
+            "metadata": {"source": "module_1", "type": "concept", "category": "ros2"}
+        },
+        {
+            "id": str(__import__('uuid').uuid4()),
+            "content": "Simulation is crucial in robotics development. It allows for testing and validation of robot behaviors in a safe, controlled environment before deployment on physical hardware. Common simulation platforms include Gazebo, Isaac Gym, and Webots. Simulation helps reduce development time and costs while improving safety.",
+            "metadata": {"source": "module_2", "type": "concept", "category": "simulation"}
+        },
+        {
+            "id": str(__import__('uuid').uuid4()),
+            "content": "Isaac Gym provides GPU-accelerated physics simulation for robot learning. It enables the training of reinforcement learning agents directly on GPU, dramatically increasing training speed and allowing for complex robotic tasks to be learned efficiently. Isaac Gym is particularly useful for training policies for robotic manipulation and locomotion.",
+            "metadata": {"source": "module_3", "type": "concept", "category": "isaac_gym"}
+        },
+        {
+            "id": str(__import__('uuid').uuid4()),
+            "content": "Vision-Language-Action (VLA) models integrate visual perception, language understanding, and action execution. These models enable robots to understand natural language commands and perform appropriate physical actions based on visual input. VLA models represent a significant step toward more intuitive human-robot interaction.",
+            "metadata": {"source": "module_4", "type": "concept", "category": "vla"}
+        },
+        {
+            "id": str(__import__('uuid').uuid4()),
+            "content": "Embodied intelligence refers to the idea that intelligence emerges from the interaction between an agent and its environment. In robotics, this means that intelligent behavior is not just a result of complex algorithms, but also of the robot's physical form, sensors, and actuators working together with its control systems.",
+            "metadata": {"source": "module_5", "type": "concept", "category": "embodied_intelligence"}
+        }
+    ]
+
+    # Add sample content to storage with local embeddings or zero vectors as fallback
+    points = []
+    for data in sample_contents:
+        try:
+            # Generate embedding for the content using local model
+            embedding = None
+            if EMBEDDING_MODEL_AVAILABLE:
+                try:
+                    embedding = embedding_model.encode([data["content"]])[0].tolist()
+                    logger.info("Successfully generated embedding with local model")
+                except Exception as local_error:
+                    logger.warning(f"Local embedding model failed: {str(local_error)}, using zero vector as fallback")
+                    # Use a simple 384-dimensional zero vector as a last resort
+                    embedding = [0.0] * 384
+            else:
+                logger.warning("No embedding models available, using zero vector as fallback")
+                # Use a simple 384-dimensional zero vector as a last resort
+                embedding = [0.0] * 384
+
+            if embedding is not None:
+                points.append(
+                    models.PointStruct(
+                        id=data["id"],
+                        vector=embedding,
+                        payload={
+                            "content": data["content"],
+                            **data["metadata"]
+                        }
+                    )
+                )
+        except Exception as e:
+            logger.error(f"Error processing sample content: {str(e)}")
+            # Add with a simple zero vector as absolute fallback
+            try:
+                points.append(
+                    models.PointStruct(
+                        id=data["id"],
+                        vector=[0.0] * 384,  # Use 384-dim vector as fallback
+                        payload={
+                            "content": data["content"],
+                            **data["metadata"]
+                        }
+                    )
+                )
+            except Exception as fallback_error:
+                logger.error(f"Could not add fallback content: {str(fallback_error)}")
+                continue
+
+    if points:
+        try:
+            client.upsert(
+                collection_name=collection_name,
+                points=points
+            )
+            logger.info(f"Successfully loaded {len(points)} sample content items with fallback vectors")
+        except Exception as e:
+            logger.warning(f"Failed to upsert with fallback vectors: {str(e)}, attempting to create collection with matching vector size")
+            # Even if upsert fails, try to ensure collection exists with the correct embedding dimension
+            try:
+                embedding_dim = len(points[0].vector) if points and points[0].vector else 384
+                try:
+                    client.get_collection(collection_name)
+                except Exception:
+                    client.create_collection(
+                        collection_name=collection_name,
+                        vectors_config=models.VectorParams(
+                            size=embedding_dim,
+                            distance=models.Distance.COSINE
+                        )
+                    )
+            except Exception as collection_error:
+                logger.warning(f"Could not create collection: {str(collection_error)}")
+    else:
+        logger.warning("No points to load, creating empty collection as fallback")
+        # Create collection with basic config if it doesn't exist
+        try:
+            client.get_collection(collection_name)
+        except:
+            client.create_collection(
+                collection_name=collection_name,
+                vectors_config=models.VectorParams(
+                    size=384,  # Default fallback size
+                    distance=models.Distance.COSINE
+                )
+            )
+
+
+def ensure_content_loaded(client, collection_name: str):
+    """Ensure that content is loaded into the vector database."""
+    try:
+        # Load content to Qdrant (may return an alternate collection name)
+        effective_collection = load_content_to_qdrant(client, collection_name)
+
+        # Verify content was loaded
+        try:
+            collection_info = client.get_collection(effective_collection or collection_name)
+            logger.info(f"Collection '{effective_collection or collection_name}' has {getattr(collection_info, 'points_count', 'unknown')} points")
+        except Exception as e:
+            logger.warning(f"Could not get collection info: {str(e)}")
+
+        return effective_collection or collection_name
+
+    except Exception as e:
+        logger.error(f"Error ensuring content loaded: {str(e)}")
+        return collection_name
