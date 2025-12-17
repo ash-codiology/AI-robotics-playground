@@ -1,9 +1,0 @@
-node_modules/
-dist/
-build/
-.git/
-Dockerfile*
-.dockerignore
-*.log*
-.env*
-coverage/

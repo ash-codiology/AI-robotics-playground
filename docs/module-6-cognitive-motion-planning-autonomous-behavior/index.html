@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-module-6-cognitive-motion-planning-autonomous-behavior/index" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Module 6: Cognitive Motion Planning &amp; Autonomous Behavior | Physical AI &amp; Humanoid Robotics Course</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://ash-codiology.github.io/AI-robotics-playground/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://ash-codiology.github.io/AI-robotics-playground/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://ash-codiology.github.io/AI-robotics-playground/docs/module-6-cognitive-motion-planning-autonomous-behavior/"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Module 6: Cognitive Motion Planning &amp; Autonomous Behavior | Physical AI &amp; Humanoid Robotics Course"><meta data-rh="true" name="description" content="Introduction"><meta data-rh="true" property="og:description" content="Introduction"><link data-rh="true" rel="icon" href="/AI-robotics-playground/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://ash-codiology.github.io/AI-robotics-playground/docs/module-6-cognitive-motion-planning-autonomous-behavior/"><link data-rh="true" rel="alternate" href="https://ash-codiology.github.io/AI-robotics-playground/docs/module-6-cognitive-motion-planning-autonomous-behavior/" hreflang="en"><link data-rh="true" rel="alternate" href="https://ash-codiology.github.io/AI-robotics-playground/docs/module-6-cognitive-motion-planning-autonomous-behavior/" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://YOUR_APP_ID-dsn.algolia.net" crossorigin="anonymous"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Modules","item":"https://ash-codiology.github.io/AI-robotics-playground/docs/category/modules"},{"@type":"ListItem","position":2,"name":"Module 6: Cognitive Motion Planning & Autonomous Behavior","item":"https://ash-codiology.github.io/AI-robotics-playground/docs/module-6-cognitive-motion-planning-autonomous-behavior/"}]}</script><link rel="stylesheet" href="/AI-robotics-playground/assets/css/styles.05dad744.css">
+<script src="/AI-robotics-playground/assets/js/runtime~main.5b79a05b.js" defer="defer"></script>
+<script src="/AI-robotics-playground/assets/js/main.2b39b7f3.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/AI-robotics-playground/img/logo.svg"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/AI-robotics-playground/"><div class="navbar__logo"><img src="/AI-robotics-playground/img/logo.svg" alt="Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/AI-robotics-playground/img/logo.svg" alt="Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Physical AI &amp; Robotics</b></a><div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Tools</a><ul class="dropdown__menu"><li><a class="dropdown__link" href="/AI-robotics-playground/system-test">System Test</a></li></ul></div></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Account</a><ul class="dropdown__menu"><li><a class="dropdown__link" href="/AI-robotics-playground/login">Sign In</a></li><li><a class="dropdown__link" href="/AI-robotics-playground/login">Sign Up</a></li></ul></div><a href="https://github.com/ash-codiology/AI-robotics-playground" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search (Meta+k)" aria-keyshortcuts="Meta+k"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" fill="none" stroke-width="1.4"></circle><path d="m21 21-4.3-4.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/AI-robotics-playground/docs/introduction/"><span title="Introduction" class="linkLabel_WmDU">Introduction</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href="/AI-robotics-playground/docs/category/modules"><span title="Modules" class="categoryLinkLabel_W154">Modules</span></a><button aria-label="Collapse sidebar category &#x27;Modules&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/AI-robotics-playground/docs/module-1-ros2/"><span title="The Robotic Nervous System (ROS 2)" class="linkLabel_WmDU">The Robotic Nervous System (ROS 2)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/AI-robotics-playground/docs/module-2-simulation/"><span title="The Digital Twin (Gazebo &amp; Unity)" class="linkLabel_WmDU">The Digital Twin (Gazebo &amp; Unity)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/AI-robotics-playground/docs/module-3-isaac/"><span title="The AI-Robot Brain (NVIDIA Isaac)" class="linkLabel_WmDU">The AI-Robot Brain (NVIDIA Isaac)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/AI-robotics-playground/docs/module-4-vla/"><span title="Vision-Language-Action (VLA)" class="linkLabel_WmDU">Vision-Language-Action (VLA)</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/AI-robotics-playground/docs/module-5-foundations-of-embodied-intelligence/"><span title="Module 5: Foundations of Embodied Intelligence" class="categoryLinkLabel_W154">Module 5: Foundations of Embodied Intelligence</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" tabindex="0" href="/AI-robotics-playground/docs/module-6-cognitive-motion-planning-autonomous-behavior/"><span title="Module 6: Cognitive Motion Planning &amp; Autonomous Behavior" class="categoryLinkLabel_W154">Module 6: Cognitive Motion Planning &amp; Autonomous Behavior</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/AI-robotics-playground/docs/module-6-cognitive-motion-planning-autonomous-behavior/"><span title="Module 6: Cognitive Motion Planning &amp; Autonomous Behavior" class="linkLabel_WmDU">Module 6: Cognitive Motion Planning &amp; Autonomous Behavior</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/AI-robotics-playground/docs/module-6-cognitive-motion-planning-autonomous-behavior/examples-and-exercises"><span title="Examples and Exercises: Cognitive Motion Planning and Autonomous Behavior" class="linkLabel_WmDU">Examples and Exercises: Cognitive Motion Planning and Autonomous Behavior</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/AI-robotics-playground/docs/module-7-human-robot-interaction-safety-frameworks/"><span title="Module 7: Human-Robot Interaction &amp; Safety Frameworks" class="categoryLinkLabel_W154">Module 7: Human-Robot Interaction &amp; Safety Frameworks</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/AI-robotics-playground/docs/module-8-whole-body-kinematics-dynamics-control-systems/"><span title="Module 8: Whole-Body Kinematics, Dynamics, and Control Systems" class="categoryLinkLabel_W154">Module 8: Whole-Body Kinematics, Dynamics, and Control Systems</span></a></div></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/AI-robotics-playground/docs/appendix/decisions"><span title="Appendices" class="categoryLinkLabel_W154">Appendices</span></a></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/AI-robotics-playground/docs/capstone/"><span title="Capstone Project" class="linkLabel_WmDU">Capstone Project</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/AI-robotics-playground/docs/tutorial-basics/create-a-page"><span title="Additional Resources" class="categoryLinkLabel_W154">Additional Resources</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/AI-robotics-playground/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/AI-robotics-playground/docs/category/modules"><span>Modules</span></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Module 6: Cognitive Motion Planning &amp; Autonomous Behavior</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Module 6: Cognitive Motion Planning &amp; Autonomous Behavior</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Module 6: Cognitive Motion Planning &amp; Autonomous Behavior</h1></header>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="introduction">Introduction<a href="#introduction" class="hash-link" aria-label="Direct link to Introduction" title="Direct link to Introduction" translate="no">​</a></h2>
+<p>Cognitive motion planning represents the integration of high-level reasoning with low-level motion execution to enable autonomous robots to navigate and operate in complex, dynamic environments. Unlike traditional motion planning that focuses solely on geometric pathfinding, cognitive motion planning incorporates perception, reasoning, learning, and decision-making to generate intelligent, context-aware behaviors.</p>
+<p>This module explores the theoretical foundations, algorithms, and implementation strategies for cognitive motion planning systems that enable robots to exhibit autonomous behavior in real-world scenarios.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="core-concepts">Core Concepts<a href="#core-concepts" class="hash-link" aria-label="Direct link to Core Concepts" title="Direct link to Core Concepts" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-cognitive-architecture-for-motion-planning">1. Cognitive Architecture for Motion Planning<a href="#1-cognitive-architecture-for-motion-planning" class="hash-link" aria-label="Direct link to 1. Cognitive Architecture for Motion Planning" title="Direct link to 1. Cognitive Architecture for Motion Planning" translate="no">​</a></h3>
+<p>Cognitive motion planning requires architectures that integrate multiple functional components:</p>
+<ul>
+<li class=""><strong>Perception System</strong>: Processes sensor data to understand the environment</li>
+<li class=""><strong>World Modeling</strong>: Maintains representations of static and dynamic elements</li>
+<li class=""><strong>Task Planning</strong>: Generates high-level action sequences</li>
+<li class=""><strong>Motion Planning</strong>: Computes feasible trajectories</li>
+<li class=""><strong>Execution Control</strong>: Manages low-level motor commands</li>
+<li class=""><strong>Learning System</strong>: Adapts behavior based on experience</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-hierarchical-planning">2. Hierarchical Planning<a href="#2-hierarchical-planning" class="hash-link" aria-label="Direct link to 2. Hierarchical Planning" title="Direct link to 2. Hierarchical Planning" translate="no">​</a></h3>
+<p>Cognitive motion planning typically employs hierarchical structures:</p>
+<ul>
+<li class=""><strong>Task Level</strong>: High-level goals and sequences of actions</li>
+<li class=""><strong>Logical Level</strong>: Abstract representations of actions and their effects</li>
+<li class=""><strong>Geometric Level</strong>: Geometric path planning in configuration space</li>
+<li class=""><strong>Kinematic/Dynamic Level</strong>: Trajectory generation considering robot dynamics</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-reactive-vs-deliberative-systems">3. Reactive vs. Deliberative Systems<a href="#3-reactive-vs-deliberative-systems" class="hash-link" aria-label="Direct link to 3. Reactive vs. Deliberative Systems" title="Direct link to 3. Reactive vs. Deliberative Systems" translate="no">​</a></h3>
+<p>Cognitive systems must balance reactive responses to immediate environmental changes with deliberative planning for long-term goals:</p>
+<ul>
+<li class=""><strong>Reactive Systems</strong>: Respond quickly to environmental changes</li>
+<li class=""><strong>Deliberative Systems</strong>: Plan ahead for complex, multi-step tasks</li>
+<li class=""><strong>Hybrid Systems</strong>: Combine both approaches for robust performance</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="motion-planning-algorithms">Motion Planning Algorithms<a href="#motion-planning-algorithms" class="hash-link" aria-label="Direct link to Motion Planning Algorithms" title="Direct link to Motion Planning Algorithms" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-sampling-based-methods">1. Sampling-Based Methods<a href="#1-sampling-based-methods" class="hash-link" aria-label="Direct link to 1. Sampling-Based Methods" title="Direct link to 1. Sampling-Based Methods" translate="no">​</a></h3>
+<p>Sampling-based planners are fundamental to cognitive motion planning:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="probabilistic-roadmaps-prm">Probabilistic Roadmaps (PRM)<a href="#probabilistic-roadmaps-prm" class="hash-link" aria-label="Direct link to Probabilistic Roadmaps (PRM)" title="Direct link to Probabilistic Roadmaps (PRM)" translate="no">​</a></h4>
+<ul>
+<li class="">Pre-compute a roadmap of the configuration space</li>
+<li class="">Query-specific pathfinding on the pre-computed structure</li>
+<li class="">Effective for static environments with complex geometry</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="rapidly-exploring-random-trees-rrt">Rapidly-exploring Random Trees (RRT)<a href="#rapidly-exploring-random-trees-rrt" class="hash-link" aria-label="Direct link to Rapidly-exploring Random Trees (RRT)" title="Direct link to Rapidly-exploring Random Trees (RRT)" translate="no">​</a></h4>
+<ul>
+<li class="">Incrementally build a tree of possible paths</li>
+<li class="">Effective for high-dimensional spaces and narrow passages</li>
+<li class="">RRT* variants provide asymptotic optimality</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="informed-rrt">Informed RRT*<a href="#informed-rrt" class="hash-link" aria-label="Direct link to Informed RRT*" title="Direct link to Informed RRT*" translate="no">​</a></h4>
+<ul>
+<li class="">Improves efficiency by focusing sampling on promising regions</li>
+<li class="">Uses heuristics to guide exploration toward optimal solutions</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-optimization-based-methods">2. Optimization-Based Methods<a href="#2-optimization-based-methods" class="hash-link" aria-label="Direct link to 2. Optimization-Based Methods" title="Direct link to 2. Optimization-Based Methods" translate="no">​</a></h3>
+<p>Optimization-based planners formulate motion planning as an optimization problem:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="chomp-covariant-hamiltonian-optimization-for-motion-planning">CHOMP (Covariant Hamiltonian Optimization for Motion Planning)<a href="#chomp-covariant-hamiltonian-optimization-for-motion-planning" class="hash-link" aria-label="Direct link to CHOMP (Covariant Hamiltonian Optimization for Motion Planning)" title="Direct link to CHOMP (Covariant Hamiltonian Optimization for Motion Planning)" translate="no">​</a></h4>
+<ul>
+<li class="">Trajectory optimization using covariant gradient techniques</li>
+<li class="">Handles complex cost functions and constraints</li>
+<li class="">Smooth trajectory generation</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="trajopt">TrajOpt<a href="#trajopt" class="hash-link" aria-label="Direct link to TrajOpt" title="Direct link to TrajOpt" translate="no">​</a></h4>
+<ul>
+<li class="">Sequential convex optimization approach</li>
+<li class="">Handles collision avoidance and joint limits</li>
+<li class="">Can incorporate multiple cost terms</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-learning-based-methods">3. Learning-Based Methods<a href="#3-learning-based-methods" class="hash-link" aria-label="Direct link to 3. Learning-Based Methods" title="Direct link to 3. Learning-Based Methods" translate="no">​</a></h3>
+<p>Machine learning is increasingly important in cognitive motion planning:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="reinforcement-learning-for-motion-planning">Reinforcement Learning for Motion Planning<a href="#reinforcement-learning-for-motion-planning" class="hash-link" aria-label="Direct link to Reinforcement Learning for Motion Planning" title="Direct link to Reinforcement Learning for Motion Planning" translate="no">​</a></h4>
+<ul>
+<li class="">Learn policies for navigation in complex environments</li>
+<li class="">Can handle partial observability and dynamic obstacles</li>
+<li class="">Requires extensive training but can generalize well</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="imitation-learning">Imitation Learning<a href="#imitation-learning" class="hash-link" aria-label="Direct link to Imitation Learning" title="Direct link to Imitation Learning" translate="no">​</a></h4>
+<ul>
+<li class="">Learn from expert demonstrations</li>
+<li class="">Can capture complex behaviors difficult to program manually</li>
+<li class="">Requires diverse training data for robust performance</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="neural-motion-planning">Neural Motion Planning<a href="#neural-motion-planning" class="hash-link" aria-label="Direct link to Neural Motion Planning" title="Direct link to Neural Motion Planning" translate="no">​</a></h4>
+<ul>
+<li class="">Use neural networks to represent complex value functions</li>
+<li class="">Can learn environmental priors and task-specific behaviors</li>
+<li class="">Enables fast online planning through learned representations</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="cognitive-planning-approaches">Cognitive Planning Approaches<a href="#cognitive-planning-approaches" class="hash-link" aria-label="Direct link to Cognitive Planning Approaches" title="Direct link to Cognitive Planning Approaches" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-symbolic-planning">1. Symbolic Planning<a href="#1-symbolic-planning" class="hash-link" aria-label="Direct link to 1. Symbolic Planning" title="Direct link to 1. Symbolic Planning" translate="no">​</a></h3>
+<p>Symbolic approaches use formal logic to represent and reason about actions:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="strips-and-extensions">STRIPS and Extensions<a href="#strips-and-extensions" class="hash-link" aria-label="Direct link to STRIPS and Extensions" title="Direct link to STRIPS and Extensions" translate="no">​</a></h4>
+<ul>
+<li class="">Represent actions with preconditions, add lists, and delete lists</li>
+<li class="">Plan using forward or backward search</li>
+<li class="">Extensions include ADL, PDDL for more expressive representations</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="hierarchical-task-networks-htn">Hierarchical Task Networks (HTN)<a href="#hierarchical-task-networks-htn" class="hash-link" aria-label="Direct link to Hierarchical Task Networks (HTN)" title="Direct link to Hierarchical Task Networks (HTN)" translate="no">​</a></h4>
+<ul>
+<li class="">Decompose high-level tasks into primitive actions</li>
+<li class="">Enable complex plan generation through hierarchical decomposition</li>
+<li class="">Allow for procedural knowledge in planning</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-probabilistic-planning">2. Probabilistic Planning<a href="#2-probabilistic-planning" class="hash-link" aria-label="Direct link to 2. Probabilistic Planning" title="Direct link to 2. Probabilistic Planning" translate="no">​</a></h3>
+<p>Probabilistic approaches handle uncertainty in perception and action:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="markov-decision-processes-mdp">Markov Decision Processes (MDP)<a href="#markov-decision-processes-mdp" class="hash-link" aria-label="Direct link to Markov Decision Processes (MDP)" title="Direct link to Markov Decision Processes (MDP)" translate="no">​</a></h4>
+<ul>
+<li class="">Model decision-making under uncertainty</li>
+<li class="">Balance immediate rewards with long-term outcomes</li>
+<li class="">Value iteration and policy iteration for solution</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="partially-observable-mdp-pomdp">Partially Observable MDP (POMDP)<a href="#partially-observable-mdp-pomdp" class="hash-link" aria-label="Direct link to Partially Observable MDP (POMDP)" title="Direct link to Partially Observable MDP (POMDP)" translate="no">​</a></h4>
+<ul>
+<li class="">Handle partial observability in the environment</li>
+<li class="">Maintain belief states over possible world states</li>
+<li class="">Computationally expensive but theoretically optimal</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-integrated-task-and-motion-planning-tamp">3. Integrated Task and Motion Planning (TAMP)<a href="#3-integrated-task-and-motion-planning-tamp" class="hash-link" aria-label="Direct link to 3. Integrated Task and Motion Planning (TAMP)" title="Direct link to 3. Integrated Task and Motion Planning (TAMP)" translate="no">​</a></h3>
+<p>TAMP addresses the challenge of integrating high-level task planning with low-level motion planning:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="symbol-grounding">Symbol Grounding<a href="#symbol-grounding" class="hash-link" aria-label="Direct link to Symbol Grounding" title="Direct link to Symbol Grounding" translate="no">​</a></h4>
+<ul>
+<li class="">Connect abstract symbols to geometric and kinematic constraints</li>
+<li class="">Enable task planners to reason about geometric feasibility</li>
+<li class="">Critical for realistic plan execution</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="planning-in-belief-space">Planning in Belief Space<a href="#planning-in-belief-space" class="hash-link" aria-label="Direct link to Planning in Belief Space" title="Direct link to Planning in Belief Space" translate="no">​</a></h4>
+<ul>
+<li class="">Reason about uncertainty in both state and action outcomes</li>
+<li class="">Plan considering the need for information gathering</li>
+<li class="">Balance exploration with exploitation</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="autonomous-behavior-systems">Autonomous Behavior Systems<a href="#autonomous-behavior-systems" class="hash-link" aria-label="Direct link to Autonomous Behavior Systems" title="Direct link to Autonomous Behavior Systems" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-behavior-trees">1. Behavior Trees<a href="#1-behavior-trees" class="hash-link" aria-label="Direct link to 1. Behavior Trees" title="Direct link to 1. Behavior Trees" translate="no">​</a></h3>
+<p>Behavior trees provide a structured approach to implementing autonomous behaviors:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="structure-and-execution">Structure and Execution<a href="#structure-and-execution" class="hash-link" aria-label="Direct link to Structure and Execution" title="Direct link to Structure and Execution" translate="no">​</a></h4>
+<ul>
+<li class="">Composite nodes (sequence, selector, parallel)</li>
+<li class="">Decorator nodes (inverter, repeater, conditional)</li>
+<li class="">Leaf nodes (actions and conditions)</li>
+<li class="">Clear execution semantics and debugging capabilities</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="advantages">Advantages<a href="#advantages" class="hash-link" aria-label="Direct link to Advantages" title="Direct link to Advantages" translate="no">​</a></h4>
+<ul>
+<li class="">Modular and reusable behavior components</li>
+<li class="">Easy to visualize and modify</li>
+<li class="">Support for complex conditional behaviors</li>
+<li class="">Widely used in robotics and game AI</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-finite-state-machines">2. Finite State Machines<a href="#2-finite-state-machines" class="hash-link" aria-label="Direct link to 2. Finite State Machines" title="Direct link to 2. Finite State Machines" translate="no">​</a></h3>
+<p>FSMs provide a classic approach to behavior implementation:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="design-considerations">Design Considerations<a href="#design-considerations" class="hash-link" aria-label="Direct link to Design Considerations" title="Direct link to Design Considerations" translate="no">​</a></h4>
+<ul>
+<li class="">Define states and transition conditions</li>
+<li class="">Handle concurrent behaviors through hierarchical FSMs</li>
+<li class="">Ensure completeness and consistency of transitions</li>
+<li class="">Consider state explosion in complex systems</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-utility-based-systems">3. Utility-Based Systems<a href="#3-utility-based-systems" class="hash-link" aria-label="Direct link to 3. Utility-Based Systems" title="Direct link to 3. Utility-Based Systems" translate="no">​</a></h3>
+<p>Utility-based systems select actions based on expected utility:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="utility-functions">Utility Functions<a href="#utility-functions" class="hash-link" aria-label="Direct link to Utility Functions" title="Direct link to Utility Functions" translate="no">​</a></h4>
+<ul>
+<li class="">Quantify desirability of different action outcomes</li>
+<li class="">Combine multiple objectives and constraints</li>
+<li class="">Enable trade-off analysis between competing goals</li>
+<li class="">Support for learning and adaptation</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-subsumption-architecture">4. Subsumption Architecture<a href="#4-subsumption-architecture" class="hash-link" aria-label="Direct link to 4. Subsumption Architecture" title="Direct link to 4. Subsumption Architecture" translate="no">​</a></h3>
+<p>The subsumption architecture implements behaviors at multiple levels:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="layered-control">Layered Control<a href="#layered-control" class="hash-link" aria-label="Direct link to Layered Control" title="Direct link to Layered Control" translate="no">​</a></h4>
+<ul>
+<li class="">Lower layers handle immediate reactions</li>
+<li class="">Higher layers implement complex behaviors</li>
+<li class="">Higher layers can inhibit but not directly control lower layers</li>
+<li class="">Robust behavior emergence from simple components</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="perception-integration">Perception Integration<a href="#perception-integration" class="hash-link" aria-label="Direct link to Perception Integration" title="Direct link to Perception Integration" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-semantic-mapping">1. Semantic Mapping<a href="#1-semantic-mapping" class="hash-link" aria-label="Direct link to 1. Semantic Mapping" title="Direct link to 1. Semantic Mapping" translate="no">​</a></h3>
+<p>Semantic maps connect geometric information with semantic understanding:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="object-recognition-and-placement">Object Recognition and Placement<a href="#object-recognition-and-placement" class="hash-link" aria-label="Direct link to Object Recognition and Placement" title="Direct link to Object Recognition and Placement" translate="no">​</a></h4>
+<ul>
+<li class="">Identify objects in the environment</li>
+<li class="">Understand object affordances and relationships</li>
+<li class="">Integrate semantic information with geometric planning</li>
+<li class="">Enable task-relevant reasoning</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="scene-understanding">Scene Understanding<a href="#scene-understanding" class="hash-link" aria-label="Direct link to Scene Understanding" title="Direct link to Scene Understanding" translate="no">​</a></h4>
+<ul>
+<li class="">Interpret scene context and relationships</li>
+<li class="">Predict object states and behaviors</li>
+<li class="">Support for goal-directed planning</li>
+<li class="">Handle dynamic and changing environments</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-dynamic-environment-handling">2. Dynamic Environment Handling<a href="#2-dynamic-environment-handling" class="hash-link" aria-label="Direct link to 2. Dynamic Environment Handling" title="Direct link to 2. Dynamic Environment Handling" translate="no">​</a></h3>
+<p>Cognitive systems must handle moving obstacles and changing environments:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="prediction-and-tracking">Prediction and Tracking<a href="#prediction-and-tracking" class="hash-link" aria-label="Direct link to Prediction and Tracking" title="Direct link to Prediction and Tracking" translate="no">​</a></h4>
+<ul>
+<li class="">Predict motion of dynamic obstacles</li>
+<li class="">Maintain belief about future states</li>
+<li class="">Plan considering uncertainty in predictions</li>
+<li class="">Replan as new information becomes available</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="real-time-replanning">Real-time Replanning<a href="#real-time-replanning" class="hash-link" aria-label="Direct link to Real-time Replanning" title="Direct link to Real-time Replanning" translate="no">​</a></h4>
+<ul>
+<li class="">Detect changes in the environment</li>
+<li class="">Trigger replanning when necessary</li>
+<li class="">Balance planning frequency with computational constraints</li>
+<li class="">Maintain safety during replanning</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="learning-and-adaptation">Learning and Adaptation<a href="#learning-and-adaptation" class="hash-link" aria-label="Direct link to Learning and Adaptation" title="Direct link to Learning and Adaptation" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-imitation-learning">1. Imitation Learning<a href="#1-imitation-learning" class="hash-link" aria-label="Direct link to 1. Imitation Learning" title="Direct link to 1. Imitation Learning" translate="no">​</a></h3>
+<p>Learning from demonstrations can accelerate behavior acquisition:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="learning-from-human-demonstrations">Learning from Human Demonstrations<a href="#learning-from-human-demonstrations" class="hash-link" aria-label="Direct link to Learning from Human Demonstrations" title="Direct link to Learning from Human Demonstrations" translate="no">​</a></h4>
+<ul>
+<li class="">Capture expert behavior through teleoperation</li>
+<li class="">Learn mapping from perception to action</li>
+<li class="">Handle variations in environment and task conditions</li>
+<li class="">Generalize to new scenarios</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="programming-by-demonstration">Programming by Demonstration<a href="#programming-by-demonstration" class="hash-link" aria-label="Direct link to Programming by Demonstration" title="Direct link to Programming by Demonstration" translate="no">​</a></h4>
+<ul>
+<li class="">Allow non-expert users to teach robot behaviors</li>
+<li class="">Learn task-specific motion patterns</li>
+<li class="">Adapt to individual user preferences</li>
+<li class="">Integrate with existing planning systems</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-reinforcement-learning">2. Reinforcement Learning<a href="#2-reinforcement-learning" class="hash-link" aria-label="Direct link to 2. Reinforcement Learning" title="Direct link to 2. Reinforcement Learning" translate="no">​</a></h3>
+<p>RL enables robots to learn optimal behaviors through interaction:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="deep-reinforcement-learning">Deep Reinforcement Learning<a href="#deep-reinforcement-learning" class="hash-link" aria-label="Direct link to Deep Reinforcement Learning" title="Direct link to Deep Reinforcement Learning" translate="no">​</a></h4>
+<ul>
+<li class="">Use neural networks to represent policies or value functions</li>
+<li class="">Handle high-dimensional sensory inputs</li>
+<li class="">Learn complex behaviors difficult to program manually</li>
+<li class="">Require significant training time and computational resources</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="multi-task-learning">Multi-task Learning<a href="#multi-task-learning" class="hash-link" aria-label="Direct link to Multi-task Learning" title="Direct link to Multi-task Learning" translate="no">​</a></h4>
+<ul>
+<li class="">Learn multiple related behaviors simultaneously</li>
+<li class="">Share representations across tasks</li>
+<li class="">Transfer knowledge between similar tasks</li>
+<li class="">Improve sample efficiency</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-learning-from-failure">3. Learning from Failure<a href="#3-learning-from-failure" class="hash-link" aria-label="Direct link to 3. Learning from Failure" title="Direct link to 3. Learning from Failure" translate="no">​</a></h3>
+<p>Robots should learn from unsuccessful attempts:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="failure-detection-and-classification">Failure Detection and Classification<a href="#failure-detection-and-classification" class="hash-link" aria-label="Direct link to Failure Detection and Classification" title="Direct link to Failure Detection and Classification" translate="no">​</a></h4>
+<ul>
+<li class="">Identify when plans fail or behaviors are unsuccessful</li>
+<li class="">Classify types of failures (collision, timeout, etc.)</li>
+<li class="">Learn from failure patterns</li>
+<li class="">Adapt future behavior based on failure analysis</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="recovery-strategies">Recovery Strategies<a href="#recovery-strategies" class="hash-link" aria-label="Direct link to Recovery Strategies" title="Direct link to Recovery Strategies" translate="no">​</a></h4>
+<ul>
+<li class="">Implement strategies for handling common failures</li>
+<li class="">Learn when to retry vs. when to replan</li>
+<li class="">Develop robust fallback behaviors</li>
+<li class="">Integrate recovery into planning architecture</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="safety-and-verification">Safety and Verification<a href="#safety-and-verification" class="hash-link" aria-label="Direct link to Safety and Verification" title="Direct link to Safety and Verification" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-safe-motion-planning">1. Safe Motion Planning<a href="#1-safe-motion-planning" class="hash-link" aria-label="Direct link to 1. Safe Motion Planning" title="Direct link to 1. Safe Motion Planning" translate="no">​</a></h3>
+<p>Safety is critical in cognitive motion planning:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="formal-verification">Formal Verification<a href="#formal-verification" class="hash-link" aria-label="Direct link to Formal Verification" title="Direct link to Formal Verification" translate="no">​</a></h4>
+<ul>
+<li class="">Use mathematical methods to prove safety properties</li>
+<li class="">Model-check planning algorithms and behaviors</li>
+<li class="">Verify safety invariants hold during execution</li>
+<li class="">Handle uncertainties in system models</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="risk-assessment">Risk Assessment<a href="#risk-assessment" class="hash-link" aria-label="Direct link to Risk Assessment" title="Direct link to Risk Assessment" translate="no">​</a></h4>
+<ul>
+<li class="">Quantify risks associated with different actions</li>
+<li class="">Balance safety with task performance</li>
+<li class="">Consider both immediate and long-term risks</li>
+<li class="">Adapt behavior based on risk assessment</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-human-robot-safety">2. Human-Robot Safety<a href="#2-human-robot-safety" class="hash-link" aria-label="Direct link to 2. Human-Robot Safety" title="Direct link to 2. Human-Robot Safety" translate="no">​</a></h3>
+<p>Special considerations for human-robot interaction:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="proximal-safety">Proximal Safety<a href="#proximal-safety" class="hash-link" aria-label="Direct link to Proximal Safety" title="Direct link to Proximal Safety" translate="no">​</a></h4>
+<ul>
+<li class="">Maintain safe distances from humans</li>
+<li class="">Predict human motion and intent</li>
+<li class="">Implement collision avoidance with humans</li>
+<li class="">Handle unexpected human behaviors</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="trust-and-predictability">Trust and Predictability<a href="#trust-and-predictability" class="hash-link" aria-label="Direct link to Trust and Predictability" title="Direct link to Trust and Predictability" translate="no">​</a></h4>
+<ul>
+<li class="">Design behaviors that are predictable to humans</li>
+<li class="">Communicate robot intentions clearly</li>
+<li class="">Build trust through consistent behavior</li>
+<li class="">Handle situations where human intervention is needed</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="implementation-considerations">Implementation Considerations<a href="#implementation-considerations" class="hash-link" aria-label="Direct link to Implementation Considerations" title="Direct link to Implementation Considerations" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-computational-efficiency">1. Computational Efficiency<a href="#1-computational-efficiency" class="hash-link" aria-label="Direct link to 1. Computational Efficiency" title="Direct link to 1. Computational Efficiency" translate="no">​</a></h3>
+<p>Cognitive motion planning systems must operate within real-time constraints:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="parallel-processing">Parallel Processing<a href="#parallel-processing" class="hash-link" aria-label="Direct link to Parallel Processing" title="Direct link to Parallel Processing" translate="no">​</a></h4>
+<ul>
+<li class="">Distribute planning across multiple cores or processors</li>
+<li class="">Use GPU acceleration for certain computations</li>
+<li class="">Implement asynchronous planning and execution</li>
+<li class="">Balance computational load across system components</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="approximation-techniques">Approximation Techniques<a href="#approximation-techniques" class="hash-link" aria-label="Direct link to Approximation Techniques" title="Direct link to Approximation Techniques" translate="no">​</a></h4>
+<ul>
+<li class="">Use anytime algorithms that improve with time</li>
+<li class="">Implement hierarchical approaches to reduce complexity</li>
+<li class="">Trade solution quality for computational speed when needed</li>
+<li class="">Use caching and memoization for repeated computations</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-integration-challenges">2. Integration Challenges<a href="#2-integration-challenges" class="hash-link" aria-label="Direct link to 2. Integration Challenges" title="Direct link to 2. Integration Challenges" translate="no">​</a></h3>
+<p>Integrating cognitive motion planning components presents several challenges:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="interface-design">Interface Design<a href="#interface-design" class="hash-link" aria-label="Direct link to Interface Design" title="Direct link to Interface Design" translate="no">​</a></h4>
+<ul>
+<li class="">Design clean interfaces between components</li>
+<li class="">Handle different time scales of various components</li>
+<li class="">Manage data flow and synchronization</li>
+<li class="">Ensure modularity for maintainability</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="debugging-and-monitoring">Debugging and Monitoring<a href="#debugging-and-monitoring" class="hash-link" aria-label="Direct link to Debugging and Monitoring" title="Direct link to Debugging and Monitoring" translate="no">​</a></h4>
+<ul>
+<li class="">Implement comprehensive logging and monitoring</li>
+<li class="">Visualize planning and execution processes</li>
+<li class="">Identify and diagnose system failures</li>
+<li class="">Support for remote monitoring and debugging</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="applications-and-case-studies">Applications and Case Studies<a href="#applications-and-case-studies" class="hash-link" aria-label="Direct link to Applications and Case Studies" title="Direct link to Applications and Case Studies" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-domestic-robotics">1. Domestic Robotics<a href="#1-domestic-robotics" class="hash-link" aria-label="Direct link to 1. Domestic Robotics" title="Direct link to 1. Domestic Robotics" translate="no">​</a></h3>
+<p>Cognitive motion planning enables robots to operate in human environments:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="household-tasks">Household Tasks<a href="#household-tasks" class="hash-link" aria-label="Direct link to Household Tasks" title="Direct link to Household Tasks" translate="no">​</a></h4>
+<ul>
+<li class="">Navigation in cluttered home environments</li>
+<li class="">Object manipulation for daily tasks</li>
+<li class="">Interaction with household objects</li>
+<li class="">Adaptation to different home layouts</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="safety-and-reliability">Safety and Reliability<a href="#safety-and-reliability" class="hash-link" aria-label="Direct link to Safety and Reliability" title="Direct link to Safety and Reliability" translate="no">​</a></h4>
+<ul>
+<li class="">Safe operation around family members</li>
+<li class="">Handling of fragile objects</li>
+<li class="">Robust performance in varied conditions</li>
+<li class="">Graceful failure handling</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-industrial-automation">2. Industrial Automation<a href="#2-industrial-automation" class="hash-link" aria-label="Direct link to 2. Industrial Automation" title="Direct link to 2. Industrial Automation" translate="no">​</a></h3>
+<p>Advanced manufacturing requires sophisticated motion planning:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="collaborative-robotics">Collaborative Robotics<a href="#collaborative-robotics" class="hash-link" aria-label="Direct link to Collaborative Robotics" title="Direct link to Collaborative Robotics" translate="no">​</a></h4>
+<ul>
+<li class="">Safe interaction with human workers</li>
+<li class="">Adaptive task execution</li>
+<li class="">Dynamic reconfiguration of work cells</li>
+<li class="">Integration with existing manufacturing systems</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="quality-control">Quality Control<a href="#quality-control" class="hash-link" aria-label="Direct link to Quality Control" title="Direct link to Quality Control" translate="no">​</a></h4>
+<ul>
+<li class="">Precise motion for inspection tasks</li>
+<li class="">Adaptive sampling based on learned patterns</li>
+<li class="">Integration with quality management systems</li>
+<li class="">Real-time decision making</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-autonomous-vehicles">3. Autonomous Vehicles<a href="#3-autonomous-vehicles" class="hash-link" aria-label="Direct link to 3. Autonomous Vehicles" title="Direct link to 3. Autonomous Vehicles" translate="no">​</a></h3>
+<p>Motion planning for autonomous vehicles requires high safety standards:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="navigation-in-traffic">Navigation in Traffic<a href="#navigation-in-traffic" class="hash-link" aria-label="Direct link to Navigation in Traffic" title="Direct link to Navigation in Traffic" translate="no">​</a></h4>
+<ul>
+<li class="">Path planning in dynamic environments</li>
+<li class="">Prediction of other vehicles&#x27; behavior</li>
+<li class="">Handling of traffic rules and regulations</li>
+<li class="">Emergency response and collision avoidance</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="multi-modal-transportation">Multi-modal Transportation<a href="#multi-modal-transportation" class="hash-link" aria-label="Direct link to Multi-modal Transportation" title="Direct link to Multi-modal Transportation" translate="no">​</a></h4>
+<ul>
+<li class="">Integration with pedestrian and cyclist navigation</li>
+<li class="">Handling of complex intersection scenarios</li>
+<li class="">Coordination with traffic infrastructure</li>
+<li class="">Communication with other vehicles</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="assessment-questions">Assessment Questions<a href="#assessment-questions" class="hash-link" aria-label="Direct link to Assessment Questions" title="Direct link to Assessment Questions" translate="no">​</a></h2>
+<ol>
+<li class="">
+<p>Compare and contrast sampling-based and optimization-based motion planning approaches. Discuss the advantages and limitations of each for cognitive motion planning applications.</p>
+</li>
+<li class="">
+<p>Explain the concept of integrated task and motion planning (TAMP). Why is this integration important, and what are the main challenges in implementing TAMP systems?</p>
+</li>
+<li class="">
+<p>Describe how behavior trees can be used to implement autonomous robot behaviors. Compare behavior trees with finite state machines and utility-based systems.</p>
+</li>
+<li class="">
+<p>Discuss the role of learning in cognitive motion planning. How can reinforcement learning and imitation learning be integrated with traditional planning approaches?</p>
+</li>
+<li class="">
+<p>Analyze the safety considerations in cognitive motion planning systems. How can formal verification and risk assessment techniques be applied to ensure safe robot operation?</p>
+</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="further-reading">Further Reading<a href="#further-reading" class="hash-link" aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate="no">​</a></h2>
+<ul>
+<li class="">Siciliano, B., &amp; Khatib, O. (Eds.). (2016). Springer Handbook of Robotics.</li>
+<li class="">Choset, H., et al. (2005). Principles of Robot Motion: Theory, Algorithms, and Implementations.</li>
+<li class="">Russell, S., &amp; Norvig, P. (2020). Artificial Intelligence: A Modern Approach (4th ed.).</li>
+<li class="">Kaelbling, L. P., &amp; Lozano-Pérez, T. (2011). Integrated task and motion planning in belief space.</li>
+<li class="">Srivastava, S., et al. (2014). Combined task and motion planning through an extensible planner-independent interface layer.</li>
+</ul></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/ash-codiology/AI-robotics-playground/edit/main/book/docs/module-6-cognitive-motion-planning-autonomous-behavior/index.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/AI-robotics-playground/docs/module-5-foundations-of-embodied-intelligence/examples-and-exercises"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Examples and Exercises: Embodied Intelligence</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/AI-robotics-playground/docs/module-6-cognitive-motion-planning-autonomous-behavior/examples-and-exercises"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Examples and Exercises: Cognitive Motion Planning and Autonomous Behavior</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#introduction" class="table-of-contents__link toc-highlight">Introduction</a></li><li><a href="#core-concepts" class="table-of-contents__link toc-highlight">Core Concepts</a><ul><li><a href="#1-cognitive-architecture-for-motion-planning" class="table-of-contents__link toc-highlight">1. Cognitive Architecture for Motion Planning</a></li><li><a href="#2-hierarchical-planning" class="table-of-contents__link toc-highlight">2. Hierarchical Planning</a></li><li><a href="#3-reactive-vs-deliberative-systems" class="table-of-contents__link toc-highlight">3. Reactive vs. Deliberative Systems</a></li></ul></li><li><a href="#motion-planning-algorithms" class="table-of-contents__link toc-highlight">Motion Planning Algorithms</a><ul><li><a href="#1-sampling-based-methods" class="table-of-contents__link toc-highlight">1. Sampling-Based Methods</a></li><li><a href="#2-optimization-based-methods" class="table-of-contents__link toc-highlight">2. Optimization-Based Methods</a></li><li><a href="#3-learning-based-methods" class="table-of-contents__link toc-highlight">3. Learning-Based Methods</a></li></ul></li><li><a href="#cognitive-planning-approaches" class="table-of-contents__link toc-highlight">Cognitive Planning Approaches</a><ul><li><a href="#1-symbolic-planning" class="table-of-contents__link toc-highlight">1. Symbolic Planning</a></li><li><a href="#2-probabilistic-planning" class="table-of-contents__link toc-highlight">2. Probabilistic Planning</a></li><li><a href="#3-integrated-task-and-motion-planning-tamp" class="table-of-contents__link toc-highlight">3. Integrated Task and Motion Planning (TAMP)</a></li></ul></li><li><a href="#autonomous-behavior-systems" class="table-of-contents__link toc-highlight">Autonomous Behavior Systems</a><ul><li><a href="#1-behavior-trees" class="table-of-contents__link toc-highlight">1. Behavior Trees</a></li><li><a href="#2-finite-state-machines" class="table-of-contents__link toc-highlight">2. Finite State Machines</a></li><li><a href="#3-utility-based-systems" class="table-of-contents__link toc-highlight">3. Utility-Based Systems</a></li><li><a href="#4-subsumption-architecture" class="table-of-contents__link toc-highlight">4. Subsumption Architecture</a></li></ul></li><li><a href="#perception-integration" class="table-of-contents__link toc-highlight">Perception Integration</a><ul><li><a href="#1-semantic-mapping" class="table-of-contents__link toc-highlight">1. Semantic Mapping</a></li><li><a href="#2-dynamic-environment-handling" class="table-of-contents__link toc-highlight">2. Dynamic Environment Handling</a></li></ul></li><li><a href="#learning-and-adaptation" class="table-of-contents__link toc-highlight">Learning and Adaptation</a><ul><li><a href="#1-imitation-learning" class="table-of-contents__link toc-highlight">1. Imitation Learning</a></li><li><a href="#2-reinforcement-learning" class="table-of-contents__link toc-highlight">2. Reinforcement Learning</a></li><li><a href="#3-learning-from-failure" class="table-of-contents__link toc-highlight">3. Learning from Failure</a></li></ul></li><li><a href="#safety-and-verification" class="table-of-contents__link toc-highlight">Safety and Verification</a><ul><li><a href="#1-safe-motion-planning" class="table-of-contents__link toc-highlight">1. Safe Motion Planning</a></li><li><a href="#2-human-robot-safety" class="table-of-contents__link toc-highlight">2. Human-Robot Safety</a></li></ul></li><li><a href="#implementation-considerations" class="table-of-contents__link toc-highlight">Implementation Considerations</a><ul><li><a href="#1-computational-efficiency" class="table-of-contents__link toc-highlight">1. Computational Efficiency</a></li><li><a href="#2-integration-challenges" class="table-of-contents__link toc-highlight">2. Integration Challenges</a></li></ul></li><li><a href="#applications-and-case-studies" class="table-of-contents__link toc-highlight">Applications and Case Studies</a><ul><li><a href="#1-domestic-robotics" class="table-of-contents__link toc-highlight">1. Domestic Robotics</a></li><li><a href="#2-industrial-automation" class="table-of-contents__link toc-highlight">2. Industrial Automation</a></li><li><a href="#3-autonomous-vehicles" class="table-of-contents__link toc-highlight">3. Autonomous Vehicles</a></li></ul></li><li><a href="#assessment-questions" class="table-of-contents__link toc-highlight">Assessment Questions</a></li><li><a href="#further-reading" class="table-of-contents__link toc-highlight">Further Reading</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer_HWHI"><div class="container"><div class="row"><div class="col col--3"><h4 class="footerTitle_oBA6">Physical AI &amp; Humanoid Robotics Course</h4><p class="footerDescription_SarU">From Digital Minds to Physical Robots</p></div><div class="col col--3"><h4 class="footerTitle_oBA6">Courses</h4><ul class="footerLinks_gPSz"><li><a href="/AI-robotics-playground/introduction">Introduction to Physical AI</a></li><li><a href="/AI-robotics-playground/module-1-ros2">ROS 2 Fundamentals</a></li><li><a href="/AI-robotics-playground/module-2-simulation">Robotic Simulation</a></li><li><a href="/AI-robotics-playground/module-3-isaac">NVIDIA Isaac Sim</a></li></ul></div><div class="col col--3"><h4 class="footerTitle_oBA6">Resources</h4><ul class="footerLinks_gPSz"><li><a href="/AI-robotics-playground/docs/category/appendices">Appendices</a></li><li><a href="/AI-robotics-playground/capstone/capstone">Capstone Project</a></li><li><a href="https://github.com/ahundt/awesome-robotics" target="_blank" rel="noopener noreferrer">Awesome Robotics</a></li><li><a href="https://robotics.stackexchange.com/" target="_blank" rel="noopener noreferrer">Robotics Forum</a></li></ul></div><div class="col col--3"><h4 class="footerTitle_oBA6">Connect</h4><ul class="footerLinks_gPSz"><li><a href="https://github.com/ash-codiology/AI-robotics-playground" target="_blank" rel="noopener noreferrer">GitHub</a></li><li><a href="https://discord.gg/robotics" target="_blank" rel="noopener noreferrer">Discord</a></li><li><a href="/AI-robotics-playground/login">Account</a></li><li><a href="/AI-robotics-playground/login">Subscribe</a></li></ul></div></div><div class="footerBottom_SO82"><div class="row"><div class="col col--6"><p class="copyright_zduL">Copyright © 2025 RAG Chatbot Project. Built with Docusaurus.</p></div><div class="col col--6"><div class="socialLinks_NYTE"><a href="#" aria-label="Twitter" class="socialLink_ohMU"><svg class="socialIcon_SwUK" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg></a><a href="#" aria-label="GitHub" class="socialLink_ohMU"><svg class="socialIcon_SwUK" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.09.682-.218.682-.485 0-.236-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.157-1.11-1.465-1.11-1.465-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.089 2.91.833.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.268 2.75 1.026A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.026 2.747-1.026.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.424 22 16.696 22 12c0-5.523-4.477-10-10-10z"></path></svg></a><a href="#" aria-label="LinkedIn" class="socialLink_ohMU"><svg class="socialIcon_SwUK" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg></a></div></div></div></div></div></footer><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Features</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/AI-robotics-playground/">Smart Search</a></li><li class="footer__item"><a class="footer__link-item" href="/AI-robotics-playground/">Source Citations</a></li><li class="footer__item"><a class="footer__link-item" href="/AI-robotics-playground/">AI Answers</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/ash-codiology/AI-robotics-playground" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/AI-robotics-playground/">Documentation</a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 RAG Chatbot Project. Built with Docusaurus.</div></div></div></footer><!--$--><div class="chatWindow_rUlj"><div class="chatHeader_dNx8"><h3>RAG Chatbot</h3><div class="headerActions_O6vV"><span class="statusIndicator_FaqN healthy_O9Ft">●</span><button class="clearButton_Dr5B" title="Export as JSON"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M7 10L12 15M12 15L17 10M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><button class="clearButton_Dr5B" title="Clear chat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 7L18.1327 19.1425C18.0579 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7M4 7H20C20.5523 7 21 7.44772 21 8V16C21 17.1046 20.1046 18 19 18H5C3.89543 18 3 17.1046 3 16V8C3 7.44772 3.44772 7 4 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><button class="clearButton_Dr5B" title="Minimize Chat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 14V17C4 17.5304 4.21071 18.0391 4.58579 18.4142C4.96086 18.7893 5.46957 19 6 19H18C18.5304 19 19.0391 18.7893 19.4142 18.4142C19.7893 18.0391 20 17.5304 20 17V9C20 8.46957 19.7893 7.96086 19.4142 7.58579C19.0391 7.21071 18.5304 7 18 7H16M4 14H10M4 14L8 10M4 14L8 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div></div><div class="chatBody_EOV6"><div class="modeSelector__dmE"><label class="active_xExp"><input type="radio" checked="">Full Book</label><label class=""><input type="radio">Selected Text</label></div> <div class="messagesContainer_nS9g"><div class="welcomeMessage_crZT"><p>Ask me anything about the Physical AI &amp; Humanoid Robotics Course!</p><p>I&#x27;ll provide answers based on the course content with proper citations.</p></div><div></div></div> <form class="inputForm_DqVe"><textarea placeholder="Ask a question about the course content..." class="inputField_ZxC8" rows="2"></textarea><button type="submit" disabled="" class="sendButton_ogpP"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></form></div></div><!--/$--></div>
+</body>
+</html>
