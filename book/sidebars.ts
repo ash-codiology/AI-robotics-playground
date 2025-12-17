@@ -1,4 +1,4 @@
-import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
+import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 
 const sidebars: SidebarsConfig = {
   defaultSidebar: [
@@ -26,7 +26,6 @@ const sidebars: SidebarsConfig = {
           label: 'Module 5: Foundations of Embodied Intelligence',
           items: [
             'module-5-foundations-of-embodied-intelligence/index',
-            'module-5-foundations-of-embodied-intelligence/README',
             'module-5-foundations-of-embodied-intelligence/examples-and-exercises',
           ],
         },
@@ -35,7 +34,6 @@ const sidebars: SidebarsConfig = {
           label: 'Module 6: Cognitive Motion Planning & Autonomous Behavior',
           items: [
             'module-6-cognitive-motion-planning-autonomous-behavior/index',
-            'module-6-cognitive-motion-planning-autonomous-behavior/README',
             'module-6-cognitive-motion-planning-autonomous-behavior/examples-and-exercises',
           ],
         },
@@ -44,7 +42,6 @@ const sidebars: SidebarsConfig = {
           label: 'Module 7: Human-Robot Interaction & Safety Frameworks',
           items: [
             'module-7-human-robot-interaction-safety-frameworks/index',
-            'module-7-human-robot-interaction-safety-frameworks/README',
             'module-7-human-robot-interaction-safety-frameworks/examples-and-exercises',
           ],
         },
@@ -53,7 +50,6 @@ const sidebars: SidebarsConfig = {
           label: 'Module 8: Whole-Body Kinematics, Dynamics, and Control Systems',
           items: [
             'module-8-whole-body-kinematics-dynamics-control-systems/index',
-            'module-8-whole-body-kinematics-dynamics-control-systems/README',
             'module-8-whole-body-kinematics-dynamics-control-systems/examples-and-exercises',
           ],
         },
@@ -87,27 +83,21 @@ const sidebars: SidebarsConfig = {
         {
           type: 'link',
           label: 'Awesome Robotics List',
-          href: 'https://github.com/ahundt/awesome-robotics'
+          href: 'https://github.com/ahundt/awesome-robotics',
         },
         {
           type: 'link',
           label: 'The Robotics Forum',
-          href: 'https://robotics.stackexchange.com/'
+          href: 'https://robotics.stackexchange.com/',
         },
         {
           type: 'link',
           label: 'Open Robotics',
-          href: 'https://www.openrobotics.org/'
-        },
-        {
-          type: 'link',
-          label: 'System Test',
-          href: '/system-test',
+          href: 'https://www.openrobotics.org/',
         },
       ],
-    }
+    },
   ],
 };
 
 export default sidebars;
-

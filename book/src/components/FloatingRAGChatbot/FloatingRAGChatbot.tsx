@@ -1,11 +1,37 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useTheme } from '../../contexts/ThemeContext';
 import { queryRAG, healthCheck } from '../../utils/api';
 import { QueryRequest, ChatMessage, SourceMetadata } from '../../utils/types';
 import styles from './FloatingRAGChatbot.module.css';
 
 const FloatingRAGChatbot: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const { theme, toggleTheme } = useTheme();
+  // State for minimizing/maximizing the chat
+  const [isMinimized, setIsMinimized] = useState(() => {
+    // Load minimized state from localStorage on component mount
+    if (typeof window !== 'undefined') {
+      const savedMinimizedState = localStorage.getItem('chatbot-minimized');
+      // If no saved state exists, default to false (expanded) for first-time users
+      // This means the chat will be open by default
+      return savedMinimizedState ? JSON.parse(savedMinimizedState) : false;
+    }
+    return false; // Default to expanded if not in browser environment
+  });
+  const [messages, setMessages] = useState<ChatMessage[]>(() => {
+    // Load conversation history from localStorage on component mount
+    if (typeof window !== 'undefined') {
+      const savedMessages = localStorage.getItem('chatbot-messages');
+      if (savedMessages) {
+        // Parse and convert timestamp strings back to Date objects
+        const parsedMessages = JSON.parse(savedMessages);
+        return parsedMessages.map((msg: any) => ({
+          ...msg,
+          timestamp: new Date(msg.timestamp)
+        }));
+      }
+    }
+    return [];
+  });
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<'full_book' | 'selected_text'>('full_book');
@@ -13,47 +39,51 @@ const FloatingRAGChatbot: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  // Check backend health on component mount
+  // Save messages to localStorage whenever they change
   useEffect(() => {
-    const checkHealth = async () => {
-      const result = await healthCheck();
-      setIsBackendHealthy(result.success);
-      if (!result.success) {
-        console.error('Backend health check failed:', result.error);
-      }
-    };
-
-    checkHealth();
-
-    // Set up periodic health checks
-    const interval = setInterval(checkHealth, 30000); // Check every 30 seconds
-    return () => clearInterval(interval);
-  }, []);
+    if (typeof window !== 'undefined') {
+      // Convert Date objects to ISO strings for JSON serialization
+      const serializableMessages = messages.map(msg => ({
+        ...msg,
+        timestamp: msg.timestamp.toISOString()
+      }));
+      localStorage.setItem('chatbot-messages', JSON.stringify(serializableMessages));
+    }
+  }, [messages]);
 
   // Scroll to bottom of messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Close chat when clicking outside
+  // Check backend health on component mount with error handling
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (chatContainerRef.current && !chatContainerRef.current.contains(event.target as Node) && isOpen) {
-        // Only close if the click is not on the toggle button
-        const toggleButton = document.querySelector('[data-chatbot-toggle]');
-        if (toggleButton && !toggleButton.contains(event.target as Node)) {
-          setIsOpen(false);
+    const checkHealth = async () => {
+      try {
+        const result = await healthCheck();
+        setIsBackendHealthy(result.success);
+        if (!result.success) {
+          console.error('Backend health check failed:', result.error);
         }
+      } catch (error) {
+        console.error('Health check error:', error);
+        setIsBackendHealthy(false);
       }
     };
 
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
+    // Only perform health check after a short delay to ensure everything is loaded
+    const healthCheckTimeout = setTimeout(() => {
+      checkHealth();
+    }, 1000);
+
+    // Set up periodic health checks
+    const interval = setInterval(checkHealth, 30000); // Check every 30 seconds
+
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      clearTimeout(healthCheckTimeout);
+      clearInterval(interval);
     };
-  }, [isOpen]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -136,62 +166,159 @@ const FloatingRAGChatbot: React.FC = () => {
     }
   };
 
-  const toggleChat = () => {
-    setIsOpen(!isOpen);
-  };
 
   const clearChat = () => {
     setMessages([]);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('chatbot-messages');
+    }
+  };
+
+  const exportChat = (format: 'json' | 'text') => {
+    if (messages.length === 0) {
+      alert('No messages to export');
+      return;
+    }
+
+    let content = '';
+    let filename = '';
+
+    if (format === 'json') {
+      // Export as JSON with full message details
+      content = JSON.stringify(messages, null, 2);
+      filename = `chat-export-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.json`;
+    } else if (format === 'text') {
+      // Export as plain text with user/assistant distinction
+      content = messages
+        .map(msg => {
+          const time = msg.timestamp.toLocaleTimeString();
+          const role = msg.role === 'user' ? 'User' : 'Assistant';
+          return `[${time}] ${role}: ${msg.content}`;
+        })
+        .join('\n\n');
+      filename = `chat-export-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.txt`;
+    }
+
+    // Create and download the file
+    const blob = new Blob([content], { type: format === 'json' ? 'application/json' : 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
     <>
-      {/* Floating chat button */}
-      <button
-        data-chatbot-toggle
-        onClick={toggleChat}
-        className={`${styles.chatToggleButton} ${isOpen ? styles.open : ''}`}
-        aria-label={isOpen ? "Close chat" : "Open chat"}
+      {/* Always visible chat window */}
+      <div
+        className={`${styles.chatWindow} ${isMinimized ? styles.minimized : ''}`}
+        ref={chatContainerRef}
+        onClick={() => {
+          // Toggle between minimized and expanded states when clicking the main container
+          const newState = !isMinimized;
+          setIsMinimized(newState);
+          // Save the new state to localStorage
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('chatbot-minimized', JSON.stringify(newState));
+          }
+        }} // Toggle between minimized and expanded states when clicking the main container
       >
-        {isOpen ? (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        ) : (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 12H8.01M12 12H12.01M16 12H16.01M21 12C21 14.2565 20.2141 16.4552 18.7777 18.3036C18.3676 18.8103 17.7127 19.0807 17.117 18.9944L14.2857 18.5714C13.0903 18.3986 11.855 18.3986 10.6597 18.5714L7.82838 18.9944C7.2327 19.0807 6.5778 18.8103 6.16769 18.3036C4.7313 16.4552 3.94544 14.2565 3.94544 12C3.94544 7.58172 7.58172 3.94544 12 3.94544C16.4183 3.94544 20.0546 7.58172 20.0546 12Z"
-                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        )}
-        {isBackendHealthy ? null : (
-          <span className={styles.statusIndicator}></span>
-        )}
-      </button>
-
-      {/* Chat window - only render when open */}
-      {isOpen && (
-        <div className={styles.chatWindow} ref={chatContainerRef}>
-          <div className={styles.chatHeader}>
-            <h3>RAG Chatbot</h3>
-            <div className={styles.headerActions}>
-              <span className={`${styles.statusIndicator} ${isBackendHealthy ? styles.healthy : styles.unhealthy}`}>
-                {isBackendHealthy ? '●' : '●'}
-              </span>
-              <button onClick={clearChat} className={styles.clearButton} title="Clear chat">
+        <div className={styles.chatHeader}>
+          <h3>RAG Chatbot</h3>
+          <div className={styles.headerActions}>
+            <span className={`${styles.statusIndicator} ${isBackendHealthy ? styles.healthy : styles.unhealthy}`}>
+              {isBackendHealthy ? '●' : '●'}
+            </span>
+            <button
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent triggering the parent onClick
+                if (isMinimized) {
+                  setIsMinimized(false);
+                  // Save the new state to localStorage
+                  if (typeof window !== 'undefined') {
+                    localStorage.setItem('chatbot-minimized', JSON.stringify(false));
+                  }
+                } else {
+                  exportChat('json');
+                }
+              }}
+              className={styles.clearButton}
+              title={isMinimized ? "Open Chat" : "Export as JSON"}
+            >
+              {isMinimized ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 12H16M12 8V16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2"/>
+                </svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M7 10L12 15M12 15L17 10M12 15V3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              )}
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent triggering the parent onClick
+                if (isMinimized) {
+                  setIsMinimized(false);
+                  // Save the new state to localStorage
+                  if (typeof window !== 'undefined') {
+                    localStorage.setItem('chatbot-minimized', JSON.stringify(false));
+                  }
+                } else {
+                  clearChat();
+                }
+              }}
+              className={styles.clearButton}
+              title={isMinimized ? "Open Chat" : "Clear chat"}
+            >
+              {isMinimized ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M12 8V12L15 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              ) : (
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M19 7L18.1327 19.1425C18.0579 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7M4 7H20C20.5523 7 21 7.44772 21 8V16C21 17.1046 20.1046 18 19 18H5C3.89543 18 3 17.1046 3 16V8C3 7.44772 3.44772 7 4 7Z"
                         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </button>
-              <button onClick={toggleChat} className={styles.closeButton} title="Close chat">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              )}
+            </button>
+            {/* Minimize/Maximize button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent triggering the parent onClick
+                const newState = !isMinimized;
+                setIsMinimized(newState);
+                // Save the new state to localStorage
+                if (typeof window !== 'undefined') {
+                  localStorage.setItem('chatbot-minimized', JSON.stringify(newState));
+                }
+              }}
+              className={styles.clearButton}
+              title={isMinimized ? "Expand Chat" : "Minimize Chat"}
+            >
+              {isMinimized ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12Z" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M12 6V12L16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-              </button>
-            </div>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 14V17C4 17.5304 4.21071 18.0391 4.58579 18.4142C4.96086 18.7893 5.46957 19 6 19H18C18.5304 19 19.0391 18.7893 19.4142 18.4142C19.7893 18.0391 20 17.5304 20 17V9C20 8.46957 19.7893 7.96086 19.4142 7.58579C19.0391 7.21071 18.5304 7 18 7H16M4 14H10M4 14L8 10M4 14L8 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              )}
+            </button>
           </div>
+        </div>
 
-          <div className={styles.modeSelector}>
+        {!isMinimized && (
+          <div className={styles.chatBody}>
+            <div className={styles.modeSelector}>
             <label className={mode === 'full_book' ? styles.active : ''}>
               <input
                 type="radio"
@@ -208,7 +335,7 @@ const FloatingRAGChatbot: React.FC = () => {
               />
               Selected Text
             </label>
-          </div>
+          </div> {/* End of modeSelector */}
 
           <div className={styles.messagesContainer}>
             {messages.length === 0 ? (
@@ -260,7 +387,7 @@ const FloatingRAGChatbot: React.FC = () => {
               </div>
             )}
             <div ref={messagesEndRef} />
-          </div>
+          </div> {/* End of messagesContainer */}
 
           <form onSubmit={handleSubmit} className={styles.inputForm}>
             <textarea
@@ -279,9 +406,15 @@ const FloatingRAGChatbot: React.FC = () => {
             </button>
           </form>
         </div>
-      )}
+        )}
+      </div>
     </>
   );
 };
 
 export default FloatingRAGChatbot;
+
+
+
+
+

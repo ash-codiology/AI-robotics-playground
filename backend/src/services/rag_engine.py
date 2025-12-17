@@ -1,8 +1,10 @@
 from typing import List
+from datetime import datetime
 from src.models.rag import RAGRequest, RAGResponse, RAGContext, RAGConfig
 from src.models.entities import RetrievedChunk
 from src.services.retrieval import retrieval_service
 from src.services.generation import generation_service
+from src.services.conversations import conversation_store
 from src.config.settings import settings
 from src.utils.helpers import log_query_processing, log_retrieval_details
 import logging
@@ -15,6 +17,7 @@ class RAGEngineService:
         self.config = RAGConfig()
         self.retrieval_service = retrieval_service
         self.generation_service = generation_service
+        self.conversation_store = conversation_store
 
     def process_query(self, request: RAGRequest) -> RAGResponse:
         """
@@ -27,11 +30,24 @@ class RAGEngineService:
             RAGResponse containing the generated response and metadata
         """
         try:
+            # Get conversation history if available
+            conversation_history = None
+            if request.conversation_id:
+                conversation = self.conversation_store.get_conversation(request.conversation_id)
+                if conversation:
+                    conversation_history = conversation.messages
+
+            # If no conversation history from store but it's provided in request, use it
+            if not conversation_history and request.conversation_history:
+                conversation_history = request.conversation_history
+
             # Create RAG context from the request
             rag_context = RAGContext(
                 query=request.query,
                 selected_text=request.selected_text,
-                mode=request.mode
+                mode=request.mode,
+                conversation_history=conversation_history,
+                conversation_id=request.conversation_id
             )
 
             # Retrieve content based on the context
@@ -41,7 +57,7 @@ class RAGEngineService:
             log_retrieval_details(request.query, rag_context.retrieved_chunks)
 
             # Generate response based on the context
-            response_text = self.generation_service.generate_response(rag_context)
+            response_text = self.generation_service.generate_response(rag_context, temperature=request.temperature, max_tokens=request.max_tokens)
 
             # Calculate confidence score based on similarity scores of retrieved chunks
             confidence_score = self._calculate_confidence_score(rag_context.retrieved_chunks)
@@ -51,8 +67,40 @@ class RAGEngineService:
                 response=response_text,
                 source_chunks=rag_context.retrieved_chunks,
                 mode_used=rag_context.mode,
-                confidence_score=confidence_score
+                confidence_score=confidence_score,
+                conversation_id=request.conversation_id
             )
+
+            # If conversation ID is provided, add this interaction to the conversation
+            if request.conversation_id:
+                # Add user query and assistant response to conversation
+                user_message = {
+                    "role": "user",
+                    "content": request.query,
+                    "timestamp": datetime.now().isoformat()
+                }
+                assistant_message = {
+                    "role": "assistant",
+                    "content": response_text,
+                    "timestamp": datetime.now().isoformat()
+                }
+
+                # Get existing conversation or create a new one if needed
+                conversation = self.conversation_store.get_conversation(request.conversation_id)
+                if conversation:
+                    # Update existing conversation with new messages
+                    self.conversation_store.add_message_to_conversation(request.conversation_id, user_message)
+                    self.conversation_store.add_message_to_conversation(request.conversation_id, assistant_message)
+                else:
+                    # If conversation doesn't exist, create a new one with the first exchange
+                    from datetime import datetime
+                    conversation = self.conversation_store.create_conversation(
+                        title=request.query[:50] + "..." if len(request.query) > 50 else request.query,
+                        mode=request.mode
+                    )
+                    self.conversation_store.add_message_to_conversation(conversation.id, user_message)
+                    self.conversation_store.add_message_to_conversation(conversation.id, assistant_message)
+                    response.conversation_id = conversation.id
 
             # Log query processing
             log_query_processing(request.query, request.mode, response_text, rag_context.retrieved_chunks)
@@ -78,11 +126,24 @@ class RAGEngineService:
             if not request.selected_text:
                 raise ValueError("Selected text is required for selected text mode")
 
+            # Get conversation history if available
+            conversation_history = None
+            if request.conversation_id:
+                conversation = self.conversation_store.get_conversation(request.conversation_id)
+                if conversation:
+                    conversation_history = conversation.messages
+
+            # If no conversation history from store but it's provided in request, use it
+            if not conversation_history and request.conversation_history:
+                conversation_history = request.conversation_history
+
             # Create RAG context specifically for selected text mode
             rag_context = RAGContext(
                 query=request.query,
                 selected_text=request.selected_text,
-                mode="selected_text"
+                mode="selected_text",
+                conversation_history=conversation_history,
+                conversation_id=request.conversation_id
             )
 
             # For selected text mode, we don't retrieve from Qdrant
@@ -100,7 +161,7 @@ class RAGEngineService:
             log_retrieval_details(request.query, rag_context.retrieved_chunks)
 
             # Generate response based on the context (which contains only selected text)
-            response_text = self.generation_service.generate_response(rag_context)
+            response_text = self.generation_service.generate_response(rag_context, temperature=request.temperature, max_tokens=request.max_tokens)
 
             # Calculate confidence score (in selected text mode, we have perfect confidence in the source)
             confidence_score = 1.0
@@ -110,8 +171,39 @@ class RAGEngineService:
                 response=response_text,
                 source_chunks=rag_context.retrieved_chunks,
                 mode_used=rag_context.mode,
-                confidence_score=confidence_score
+                confidence_score=confidence_score,
+                conversation_id=request.conversation_id
             )
+
+            # If conversation ID is provided, add this interaction to the conversation
+            if request.conversation_id:
+                # Add user query and assistant response to conversation
+                user_message = {
+                    "role": "user",
+                    "content": request.query,
+                    "timestamp": datetime.now().isoformat()
+                }
+                assistant_message = {
+                    "role": "assistant",
+                    "content": response_text,
+                    "timestamp": datetime.now().isoformat()
+                }
+
+                # Get existing conversation or create a new one if needed
+                conversation = self.conversation_store.get_conversation(request.conversation_id)
+                if conversation:
+                    # Update existing conversation with new messages
+                    self.conversation_store.add_message_to_conversation(request.conversation_id, user_message)
+                    self.conversation_store.add_message_to_conversation(request.conversation_id, assistant_message)
+                else:
+                    # If conversation doesn't exist, create a new one with the first exchange
+                    conversation = self.conversation_store.create_conversation(
+                        title=request.query[:50] + "..." if len(request.query) > 50 else request.query,
+                        mode=request.mode
+                    )
+                    self.conversation_store.add_message_to_conversation(conversation.id, user_message)
+                    self.conversation_store.add_message_to_conversation(conversation.id, assistant_message)
+                    response.conversation_id = conversation.id
 
             # Log query processing
             log_query_processing(request.query, request.mode, response_text, rag_context.retrieved_chunks)
@@ -167,17 +259,28 @@ class RAGEngineService:
         Returns:
             RAGResponse containing the generated response and metadata
         """
+        # Process the query (this will handle conversation memory)
         response = self.process_query(request)
 
         # Validate that the response is grounded in the context
         is_valid = self.validate_context_grounding(response.response, response.source_chunks)
 
         if not is_valid:
-            # If validation fails, return a response indicating insufficient information
-            logger.warning("Response validation failed - returning insufficient information response")
-            response.response = "I don't have sufficient information in the provided context to answer this question accurately."
-            response.source_chunks = []
-            response.confidence_score = 0.0
+            # If validation fails, check if we have any context at all
+            if response.source_chunks:
+                # If we have source chunks but validation failed, try to provide a more useful response
+                # rather than just saying insufficient information
+                logger.warning("Response validation failed but we have source chunks - returning response with low confidence")
+                response.confidence_score = 0.1  # Very low confidence but not zero
+            else:
+                # If we have no source chunks and validation failed, return insufficient information
+                logger.warning("Response validation failed and no source chunks available - returning insufficient information response")
+                response.response = "I don't have sufficient information in the provided context to answer this question accurately."
+                response.confidence_score = 0.0
+
+        # Ensure conversation ID is preserved in the response
+        if request.conversation_id:
+            response.conversation_id = request.conversation_id
 
         return response
 

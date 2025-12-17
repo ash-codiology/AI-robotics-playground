@@ -5,12 +5,15 @@ from datetime import datetime
 
 class QueryRequest(BaseModel):
     """API model for query requests."""
-    query: str = Field(..., description="The user's question", min_length=3, max_length=1000)
+    query: str = Field(..., description="The user's question", min_length=1, max_length=1000)  # Reduced min_length for conversation
     selected_text: Optional[str] = Field(None, description="Text selected by user, if any", max_length=5000)
-    mode: Optional[Literal['full_book', 'selected_text']] = Field(
+    mode: Optional[Literal['full_book', 'selected_text', 'conversation']] = Field(
         'full_book',
         description="Query mode, defaults to 'full_book'"
     )
+    conversation_id: Optional[str] = Field(None, description="ID of the conversation to continue")
+    temperature: Optional[float] = Field(0.7, description="Controls randomness in the response (0.0 to 1.0)", ge=0.0, le=1.0)
+    max_tokens: Optional[int] = Field(500, description="Maximum number of tokens to generate", ge=1, le=4000)
 
 
 class SourceMetadata(BaseModel):
@@ -28,10 +31,11 @@ class QueryResponse(BaseModel):
         default_factory=list,
         description="Information about source content used"
     )
-    mode_used: Literal['full_book', 'selected_text'] = Field(
+    mode_used: Literal['full_book', 'selected_text', 'conversation'] = Field(
         ...,
         description="The mode that was actually used"
     )
+    conversation_id: Optional[str] = Field(None, description="ID of the conversation if applicable")
 
 
 class HealthCheck(BaseModel):
@@ -53,7 +57,7 @@ class RAGContext(BaseModel):
     query: str
     retrieved_chunks: List[RetrievedChunk] = Field(default_factory=list)
     selected_text: Optional[str] = None
-    mode: Literal['full_book', 'selected_text']
+    mode: Literal['full_book', 'selected_text', 'conversation']
 
 
 class User(BaseModel):

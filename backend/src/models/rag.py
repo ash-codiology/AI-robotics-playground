@@ -7,15 +7,21 @@ class RAGRequest(BaseModel):
     """Request model for RAG processing."""
     query: str
     selected_text: Optional[str] = None
-    mode: Literal['full_book', 'selected_text'] = 'full_book'
+    mode: Literal['full_book', 'selected_text', 'conversation'] = 'full_book'
+    conversation_id: Optional[str] = None
+    conversation_history: Optional[List[Dict[str, Any]]] = None
+    temperature: Optional[float] = 0.7
+    max_tokens: Optional[int] = 500
 
 
 class RAGResponse(BaseModel):
     """Response model for RAG processing."""
     response: str
     source_chunks: List[RetrievedChunk] = []
-    mode_used: Literal['full_book', 'selected_text']
+    mode_used: Literal['full_book', 'selected_text', 'conversation']
     confidence_score: Optional[float] = None
+    conversation_id: Optional[str] = None
+    conversation_title: Optional[str] = None
 
 
 class RAGContext(BaseModel):
@@ -23,7 +29,9 @@ class RAGContext(BaseModel):
     query: str
     retrieved_chunks: List[RetrievedChunk] = []
     selected_text: Optional[str] = None
-    mode: Literal['full_book', 'selected_text']
+    mode: Literal['full_book', 'selected_text', 'conversation']
+    conversation_history: Optional[List[Dict[str, Any]]] = None
+    conversation_id: Optional[str] = None
 
 
 class RAGConfig(BaseModel):
