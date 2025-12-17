@@ -16,6 +16,7 @@ const config: Config = {
   projectName: GITHUB_REPO_NAME,
 
   onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',  // Add this line to explicitly set markdown links to warn
   markdown: {
     mermaid: true,
     mdx1Compat: {
